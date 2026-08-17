@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Marketing Analytics Dashboard (Demo) | BRG Financial</title>
+  <meta name="description" content="Sample customer-journey analytics dashboard for BRG Financial — traffic sources, lead channels, conversion funnel, and ROI by channel.">
+  <link rel="canonical" href="https://brgfinancial.net/dashboard.html">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#1f3864">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="BRG Financial">
+  <meta property="og:title" content="Marketing Analytics Dashboard (Demo) | BRG Financial">
+  <meta property="og:description" content="Sample customer-journey analytics dashboard for BRG Financial — traffic sources, lead channels, conversion funnel, and ROI by channel.">
+  <meta property="og:url" content="https://brgfinancial.net/dashboard.html">
+  <meta property="og:image" content="https://brgfinancial.net/assets/img/og-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FinancialService","name":"BRG Financial","url":"https://brgfinancial.net","telephone":"484-368-2477","email":"info@brgfinancial.net","areaServed":["Philadelphia","Pennsylvania","New Jersey"],"address":{"@type":"PostalAddress","addressRegion":"PA","addressLocality":"Greater Philadelphia","addressCountry":"US"},"priceRange":"Fee-based","description":"Fee-based Registered Investment Adviser offering 401(k)/ERISA plan guidance, investment management, and retirement income strategies across Greater Philadelphia, PA and NJ.","sameAs":["https://www.linkedin.com/"]}</script>
+  <meta name="robots" content="noindex,nofollow">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+  <div class="topbar">
+    <div class="container">
+      <span class="pill"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg> Greater Philadelphia · PA & NJ</span>
+      <span style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
+        <a class="pill" href="tel:+14843682477"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg> 484-368-2477</a>
+        <a class="pill" href="mailto:info@brgfinancial.net"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg> info@brgfinancial.net</a>
+      </span>
+    </div>
+  </div>
+  <div class="container">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="index.html" aria-label="BRG Financial home">
+        <svg class="mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="48" height="48" rx="11" fill="#1f3864"/><path d="M13 34V14h9.2c3.9 0 6.3 1.9 6.3 5.1 0 2.2-1.2 3.7-3.2 4.4 2.5.5 4 2.2 4 4.8 0 3.5-2.6 5.7-6.8 5.7H13z" fill="#fff"/><path d="M17.7 22.2h3.7c1.7 0 2.7-.8 2.7-2.2 0-1.4-1-2.1-2.7-2.1h-3.7v4.3zm0 8.1h4c1.9 0 2.9-.8 2.9-2.4 0-1.5-1.1-2.4-3-2.4h-3.9v4.8z" fill="#1f3864"/><path d="M31 34l4.8-10L31 14h4.3l2.7 6.4 2.7-6.4H45l-4.8 10L45 34h-4.4l-2.8-6.6L35 34h-4z" fill="#c9a227"/></svg>
+        <span class="name">BRG Financial<small>Registered Investment Adviser</small></span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
+      <ul class="nav-links" id="nav-links"><li><a href="services.html">Services</a></li><li><a href="401k-erisa.html">401(k) & ERISA</a></li><li><a href="insights.html">Insights</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul>
+      <div class="nav-cta desk">
+        <a class="btn btn--ghost" href="tel:+14843682477"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call</a>
+        <a class="btn btn--primary" href="get-started.html">Free Investor Guide</a>
+      </div>
+    </nav>
+  </div></header>
+  <main id="main">
+
+  <section class="dash-head">
+    <div class="container">
+      <div><h1>Marketing &amp; Customer-Journey Analytics</h1><div class="who">BRG Financial · demo data · last 30 days vs. prior period</div></div>
+      <div class="pill-row"><span class="pill" style="background:#fff">Aug 2026</span><a class="btn btn--primary" href="contact.html">This is a demo <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></div>
+    </div>
+  </section>
+  <div class="section section--tight" style="background:var(--bg-soft)">
+    <div class="container" style="display:grid;gap:18px">
+      <div class="notice">Sample dashboard for illustration. In production this pulls live data from Google Analytics, your GoDaddy site, and social channels into a Looker Studio or Power BI view — refreshed automatically.</div>
+
+      <div class="kpi-row">
+        <div class="kpi"><div class="lbl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-4 4"/></svg> Website visitors</div><div class="num">806</div><div class="delta up">▲ 34% vs. prior</div></div>
+        <div class="kpi"><div class="lbl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/></svg> New leads</div><div class="num">50</div><div class="delta up">▲ 61% vs. prior</div></div>
+        <div class="kpi"><div class="lbl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 7h14"/><path d="m5 7-3 6a3 3 0 0 0 6 0z"/><path d="m19 7-3 6a3 3 0 0 0 6 0z"/><path d="M7 21h10"/></svg> Lead conversion</div><div class="num">6.2%</div><div class="delta up">▲ 1.4 pts</div></div>
+        <div class="kpi"><div class="lbl"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> Est. pipeline value</div><div class="num">$2.4M</div><div class="delta up">▲ 28%</div></div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="panel-card">
+          <h3>Traffic by source</h3>
+          <p class="sub">Sessions per month — organic and content are compounding</p>
+          <div style="min-height:300px" id="chart-traffic"></div>
+        </div>
+        <div class="panel-card">
+          <h3>Device mix</h3>
+          <p class="sub">Most visitors are on mobile — why click-to-call matters</p>
+          <div style="min-height:300px" id="chart-device"></div>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+        <div class="panel-card">
+          <h3>Leads by channel</h3>
+          <p class="sub">Where the last 30 days of leads came from</p>
+          <div style="min-height:280px" id="chart-leads"></div>
+        </div>
+        <div class="panel-card">
+          <h3>Conversion funnel</h3>
+          <p class="sub">Visitor → lead → booked call → client</p>
+          <div style="margin-top:1rem">
+            <div class="funnel-row"><span class="flabel">Visitors</span><div class="funnel-bar" style="width:100%;background:#2e5fa3">806</div></div>
+            <div class="funnel-row"><span class="flabel">Engaged (2+ pages)</span><div class="funnel-bar" style="width:64%;background:#3b74c4">516</div></div>
+            <div class="funnel-row"><span class="flabel">Leads captured</span><div class="funnel-bar" style="width:31%;background:#2f8b76">50</div></div>
+            <div class="funnel-row"><span class="flabel">Booked intro call</span><div class="funnel-bar" style="width:14%;background:#c9a227">18</div></div>
+            <div class="funnel-row"><span class="flabel">Became client</span><div class="funnel-bar" style="width:5%;background:#b5533c">4</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <h3>ROI by channel</h3>
+        <p class="sub">Spend, leads, and cost per lead across marketing streams</p>
+        <div style="overflow-x:auto">
+        <table class="data">
+          <thead><tr><th>Channel</th><th class="num">Spend</th><th class="num">Leads</th><th class="num">Cost / lead</th><th class="num">Clients</th><th>Trend</th></tr></thead>
+          <tbody>
+            <tr><td>Organic search (SEO)</td><td class="num">$0</td><td class="num">17</td><td class="num">$0</td><td class="num">2</td><td><span class="up">▲ strong</span></td></tr>
+            <tr><td>Free guide (lead magnet)</td><td class="num">$0</td><td class="num">14</td><td class="num">$0</td><td class="num">1</td><td><span class="up">▲ growing</span></td></tr>
+            <tr><td>Blog / content</td><td class="num">$0</td><td class="num">9</td><td class="num">$0</td><td class="num">1</td><td><span class="up">▲ growing</span></td></tr>
+            <tr><td>LinkedIn (organic)</td><td class="num">$0</td><td class="num">6</td><td class="num">$0</td><td class="num">0</td><td><span class="up">▲ steady</span></td></tr>
+            <tr><td>Direct / referral</td><td class="num">$0</td><td class="num">4</td><td class="num">$0</td><td class="num">0</td><td>— flat</td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p class="calc-note" style="margin-top:.8rem">Low-cost/no-cost-first strategy: every lead this period came from unpaid channels. Paid keywords can be layered in later and measured the same way.</p>
+      </div>
+
+      <div class="panel-card">
+        <h3>Leads by state</h3>
+        <p class="sub">Where interest is coming from — informs where to focus</p>
+        <div style="overflow-x:auto">
+        <table class="data">
+          <thead><tr><th>State</th><th class="num">Visitors</th><th class="num">Leads</th><th class="num">Share</th></tr></thead>
+          <tbody>
+            <tr><td>Pennsylvania</td><td class="num">468</td><td class="num">31</td><td class="num">62%</td></tr>
+            <tr><td>New Jersey</td><td class="num">212</td><td class="num">13</td><td class="num">26%</td></tr>
+            <tr><td>Texas</td><td class="num">61</td><td class="num">3</td><td class="num">6%</td></tr>
+            <tr><td>Other</td><td class="num">65</td><td class="num">3</td><td class="num">6%</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  </main>
+  
+  <footer class="site-footer">
+    <div class="container">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <div class="name">BRG Financial</div>
+          <p style="margin-top:.6rem;max-width:34ch">Fee-based investment management and retirement guidance for individuals, families, and business retirement plans across Greater Philadelphia · PA & NJ.</p>
+          <p style="margin-top:.4rem"><a href="tel:+14843682477">484-368-2477</a><br><a href="mailto:info@brgfinancial.net">info@brgfinancial.net</a></p>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <ul class="foot-links">
+            <li><a href="services.html">Overview</a></li>
+            <li><a href="401k-erisa.html">401(k) &amp; ERISA</a></li>
+            <li><a href="investment-management.html">Investment Management</a></li>
+            <li><a href="retirement-income.html">Retirement Income</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Learn</h4>
+          <ul class="foot-links">
+            <li><a href="insights.html">Insights &amp; Articles</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="get-started.html">Free Investor Guide</a></li>
+            <li><a href="about.html">About Ben</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Connect</h4>
+          <ul class="foot-links">
+            <li><a href="contact.html">Book an intro call</a></li>
+            <li><a href="https://www.linkedin.com/" rel="noopener">LinkedIn</a></li>
+            <li><a href="disclosures.html">Disclosures &amp; Form ADV</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="disclosure">
+        <p><strong>Important disclosures.</strong> BRG Financial LLC is a Registered Investment Adviser. Registered in Pennsylvania and New Jersey; may transact business in other states where registered or exempt. Content on this site is for informational and educational purposes only and does not constitute investment, legal, or tax advice, an offer, or a solicitation to buy or sell any security. Investing involves risk, including the possible loss of principal; past performance and any projections are not a guarantee of future results. Figures shown in calculators and illustrations are hypothetical and for education only. In accordance with applicable regulations, this site does not publish client testimonials or endorsements.</p>
+      </div>
+      <div class="foot-bottom">
+        <span>&copy; <span data-year>2026</span> BRG Financial LLC. All rights reserved.</span>
+        <span><a href="disclosures.html">Disclosures</a> · <a href="disclosures.html#privacy">Privacy</a> · <a href="sitemap.xml">Sitemap</a></span>
+      </div>
+    </div>
+  </footer>
+  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/dashboard.js" defer></script>
+</body>
+</html>
