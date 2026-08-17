@@ -135,3 +135,28 @@ This build was made with RIA rules in mind, but please confirm before publishing
   edit the `.html` files directly if you prefer not to use the generator.
 
 *Built for BRG Financial by Grand Line Analytics.*
+
+---
+
+## Production wiring — three one-line switches
+
+All three live at the top of `gen.js` in the `SITE` object. Set a value, run `node gen.js`, re-upload.
+
+| Key | What it activates | Where to get it |
+|-----|-------------------|-----------------|
+| `SITE.booking` | Live scheduler embed on `schedule.html` (replaces the call/email fallback) | Your Calendly / Google appointment link |
+| `SITE.formEndpoint` | Silent delivery of the contact form + all lead-magnet forms to your inbox | formspree.io → new form → copy the `https://formspree.io/f/XXXX` endpoint (free tier works) |
+| `SITE.ga4` | Google Analytics on every page — feeds the Option C dashboard with real data | analytics.google.com → Admin → Data streams → Measurement ID (`G-…`) |
+
+Until these are set, the site still works: forms fall back to opening the visitor's email app, and the schedule page shows call/email booking options.
+
+## Content automation
+
+- **RSS feed** at `/feed.xml` — regenerates automatically from the `POSTS` array. Point Zapier/Buffer/dlvr.it at it to auto-cross-post new articles to LinkedIn & Facebook.
+- **Per-article share images** in `assets/img/og/` — each post's Open Graph card is branded black & gold, so shared links look sharp on LinkedIn/Facebook/X.
+- **Monthly article workflow:** append a post object to `POSTS` in `gen.js`, run `node gen.js` — the article page, insights index, sitemap, and RSS feed all update together.
+
+## Updating Ben's photo or bio
+
+- Headshot: replace `assets/img/ben-gialloreto.jpg` (any portrait crop works).
+- Bio & credentials: edit the About page section in `gen.js`, run `node gen.js`.

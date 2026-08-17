@@ -15,9 +15,12 @@ const SITE = {
   email: 'info@brgfinancial.net',
   area: 'Greater Philadelphia · PA & NJ',
   reach: 'Serving clients nationwide',
-  advisor: 'Benjamin R. Gialloreto',
+  advisor: 'Benjamin R. Gialloreto, CFA',
   advisorShort: 'Ben',
-  advisorRole: 'Principal & Investment Adviser Representative'
+  advisorRole: 'Founder & Principal · CFA Charterholder',
+  booking: '',        // paste a Calendly/booking URL here to activate the scheduler embed on schedule.html
+  formEndpoint: '',   // paste a Formspree endpoint (https://formspree.io/f/XXXX) for silent form delivery
+  ga4: ''             // paste a GA4 measurement ID (G-XXXXXXXXX) to activate Google Analytics
 };
 
 /* ---------- Inline SVG icons ---------- */
@@ -71,14 +74,13 @@ function nav(active, prefix) {
   <div class="container">
     <nav class="nav" aria-label="Primary">
       <a class="brand" href="${prefix}index.html" aria-label="${SITE.name} home">
-        ${LOGO}
-        <span class="name">${SITE.name}<small>Registered Investment Adviser</small></span>
+        <span class="wordmark">BRG FINANCIAL<small>Registered Investment Adviser</small></span>
       </a>
       <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
       <ul class="nav-links" id="nav-links">${links}</ul>
       <div class="nav-cta desk">
         <a class="btn btn--ghost" href="tel:${SITE.tel}">${I.phone} Call</a>
-        <a class="btn btn--primary" href="${prefix}get-started.html">Free Investor Guide</a>
+        <a class="btn btn--primary" href="${prefix}schedule.html">Schedule Appointment</a>
       </div>
     </nav>
   </div>`;
@@ -90,7 +92,7 @@ function footer(prefix) {
     <div class="container">
       <div class="foot-grid">
         <div class="foot-brand">
-          <div class="name">${SITE.name}</div>
+          <div class="wordmark wordmark--foot">BRG FINANCIAL<small>Registered Investment Adviser</small></div>
           <p style="margin-top:.6rem;max-width:34ch">Fee-based investment management and retirement guidance for individuals, families, and business retirement plans. Headquartered in ${SITE.area} — serving clients nationwide.</p>
           <p style="margin-top:.4rem"><a href="tel:${SITE.tel}">${SITE.phone}</a><br><a href="mailto:${SITE.email}">${SITE.email}</a></p>
         </div>
@@ -115,7 +117,8 @@ function footer(prefix) {
         <div>
           <h4>Connect</h4>
           <ul class="foot-links">
-            <li><a href="${prefix}contact.html">Book an intro call</a></li>
+            <li><a href="${prefix}schedule.html">Schedule an appointment</a></li>
+            <li><a href="${prefix}contact.html">Contact form</a></li>
             <li><a href="https://www.linkedin.com/" rel="noopener">LinkedIn</a></li>
             <li><a href="${prefix}disclosures.html">Disclosures &amp; Form ADV</a></li>
           </ul>
@@ -169,7 +172,7 @@ function layout(o) {
   <meta property="og:title" content="${title}">
   <meta property="og:description" content="${desc}">
   <meta property="og:url" content="${canonical}">
-  <meta property="og:image" content="${SITE.url}/assets/img/og-cover.png">
+  <meta property="og:image" content="${SITE.url}/${o.ogPath || 'assets/img/og-cover.png'}">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="${prefix}assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -177,6 +180,9 @@ function layout(o) {
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="${prefix}assets/css/styles.css">
   ${ldScript}
+  <link rel="alternate" type="application/rss+xml" title="BRG Financial Insights" href="${SITE.url}/feed.xml">
+  ${SITE.ga4 ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${SITE.ga4}"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${SITE.ga4}');</script>` : '<!-- Google Analytics: set SITE.ga4 in gen.js and regenerate to activate -->'}
   ${o.head || ''}
 </head>
 <body${o.bodyClass ? ` class="${o.bodyClass}"` : ''}>
@@ -185,6 +191,10 @@ function layout(o) {
   <main id="main">
 ${o.main}
   </main>
+  <div class="callbar" role="navigation" aria-label="Quick contact">
+    <a class="btn btn--primary" href="tel:${SITE.tel}">${I.phone} Call ${SITE.advisorShort}</a>
+    <a class="btn btn--navy" href="${prefix}schedule.html">${I.clock} Schedule</a>
+  </div>
   ${footer(prefix)}
   <script src="${prefix}assets/js/main.js" defer></script>
   ${o.scripts || ''}
@@ -213,7 +223,7 @@ function ctaBand(prefix) {
       <h2 style="color:#fff">A 20-minute intro call, no pressure and no cost</h2>
       <p style="color:#d8d4c6">See whether we're a fit, get a straight answer about your situation, and leave with something useful either way.</p>
       <div class="hero-cta" style="justify-content:center;margin-top:1.2rem">
-        <a class="btn btn--primary btn--lg" href="${prefix}contact.html">Book an intro call ${I.arrow}</a>
+        <a class="btn btn--primary btn--lg" href="${prefix}schedule.html">Schedule an appointment ${I.arrow}</a>
         <a class="btn btn--light btn--lg" href="tel:${SITE.tel}">${I.phone} ${SITE.phone}</a>
       </div>
     </div>
@@ -362,6 +372,53 @@ const POSTS = [
       <h2>403(b) plans for nonprofits</h2>
       <p>If you’re a nonprofit or educational employer, a 403(b) plays a similar role with its own rules. The same principles apply: prudent options, reasonable costs, and a documented process.</p>
       <p><em>Curious what a plan would look like for your business? <a href="../401k-erisa.html">See our 401(k) &amp; ERISA services</a> or <a href="../contact.html">book a call.</a></em></p>`
+  },
+  {
+    slug: 'common-401k-rollover-mistakes',
+    cat: '401(k) & ERISA',
+    title: 'The 5 Most Common 401(k) Rollover Mistakes (and How to Avoid Them)',
+    date: '2026-06-01', dateLabel: 'June 1, 2026', read: '7 min',
+    excerpt: 'A rollover is usually simple — but a few wrong turns can cost you taxes, penalties, or years of growth. Here are the mistakes we see most, and the clean way through.',
+    tags: ['401(k)', 'rollover', 'IRA', 'taxes'],
+    body: `
+      <p>Changing jobs is the most common moment people finally deal with an old 401(k) — and it’s also where expensive mistakes happen. The good news: every one of them is avoidable with a little care.</p>
+      <h2>Mistake #1: Cashing out</h2>
+      <p>It’s tempting to treat an old 401(k) like found money. But cashing out generally means income taxes plus a 10% early-withdrawal penalty if you’re under 59½ — and, worse, you evict money that could have compounded for decades. A $20,000 cash-out in your 30s can easily mean six figures of missing retirement money later.</p>
+      <h2>Mistake #2: The 60-day trap</h2>
+      <p>If a check gets sent to <em>you</em> (an “indirect rollover”), the clock starts: you have 60 days to redeposit the funds or the IRS treats it as a distribution. Employer plans also typically withhold 20% for taxes — which you must make up out of pocket to complete the full rollover. The clean route is a <strong>direct (trustee-to-trustee) rollover</strong>, where the money never touches your hands.</p>
+      <h2>Mistake #3: Not comparing before you move</h2>
+      <p>A rollover isn’t automatically the right call. Compare fees, investment options, and features in your old plan, your new employer’s plan, and an IRA. Sometimes staying put is fine; often a managed IRA gives you more control and a coherent strategy. The point is to decide, not default.</p>
+      <h2>Mistake #4: Rolling over — then leaving it in cash</h2>
+      <p>This one is silent but deadly. Money arrives in the new IRA, lands in a money-market fund, and sits there for months (or years) uninvested. If you go through the effort of a rollover, finish the job: get the money invested according to a plan.</p>
+      <h2>Mistake #5: Forgetting old accounts entirely</h2>
+      <p>Millions of 401(k) accounts are left behind at old employers. Each may carry its own fees and a portfolio no one is watching. Consolidating puts your whole retirement picture in one place where it can be managed deliberately.</p>
+      <blockquote>The pattern behind all five: rollovers go wrong when they happen by default instead of by decision.</blockquote>
+      <p><em>Have an old 401(k) you’ve been meaning to deal with? <a href="../401k-erisa.html">See how we handle rollovers</a> or <a href="../schedule.html">grab 20 minutes</a> and we’ll look at it together.</em></p>`
+  },
+  {
+    slug: 'how-much-emergency-fund',
+    cat: 'Getting Started',
+    title: 'How Much Cash Should You Actually Keep? Emergency Funds, Explained',
+    date: '2026-05-15', dateLabel: 'May 15, 2026', read: '6 min',
+    excerpt: 'Too little cash and one bad month becomes debt. Too much and inflation quietly taxes you. Here’s how to find the right number — and where to park it.',
+    tags: ['emergency fund', 'cash', 'high-yield savings', 'planning'],
+    body: `
+      <p>Before any serious investing conversation, there’s a boring question that matters more: <strong>how much cash should you keep on the sidelines?</strong> Get it wrong in either direction and it costs you.</p>
+      <h2>The baseline: 3–6 months of expenses</h2>
+      <p>The classic rule holds up: keep three to six months of essential expenses in cash. Toward three months if your income is stable and your household has two earners; toward six (or more) if your income is variable, you’re self-employed, or one paycheck covers everything.</p>
+      <p>Note that the number is built on <em>expenses</em>, not income. If your essential monthly spend is $8,500, a six-month cushion is roughly $51,000 — regardless of what you earn.</p>
+      <h2>Where to park it: make your cash work</h2>
+      <p>An emergency fund shouldn’t sit in a checking account earning nothing. A <strong>high-yield savings account</strong> keeps the money liquid and earning meaningful interest. Same safety, better output. That’s the whole trade.</p>
+      <h2>When “too much cash” becomes the problem</h2>
+      <p>Cash feels safe, but past your cushion it quietly loses purchasing power to inflation every year. If you’re holding two years of expenses “just in case,” you’re paying a real cost for comfort. Once the cushion is full, additional savings generally belong in investments with a plan behind them.</p>
+      <h2>A simple way to structure it</h2>
+      <ul>
+        <li><strong>Tier 1 — checking:</strong> one month of expenses for normal cash flow.</li>
+        <li><strong>Tier 2 — high-yield savings:</strong> the 3–6 month emergency cushion.</li>
+        <li><strong>Tier 3 — invested:</strong> everything beyond that, working toward long-term goals.</li>
+      </ul>
+      <blockquote>Shit happens — job changes, roof leaks, transmissions. The cushion isn’t pessimism; it’s what lets the rest of your money stay invested when it does.</blockquote>
+      <p><em>Cushion full and wondering what’s next? <a href="../get-started.html">Run the growth calculator</a> or <a href="../schedule.html">schedule a complimentary consultation</a>.</em></p>`
   }
 ];
 
@@ -400,8 +457,8 @@ pages.push({
             <span class="chip">${I.chart} Active, tactical management</span>
           </div>
           <div class="hero-cta">
-            <a class="btn btn--primary btn--lg" href="get-started.html">Get the free investor guide ${I.arrow}</a>
-            <a class="btn btn--light btn--lg" href="tel:${SITE.tel}">${I.phone} ${SITE.phone}</a>
+            <a class="btn btn--primary btn--lg" href="schedule.html">Schedule an appointment ${I.arrow}</a>
+            <a class="btn btn--light btn--lg" href="get-started.html">Get the free investor guide</a>
           </div>
         </div>
         <div class="hero-card glass">
@@ -520,7 +577,7 @@ pages.push({
             <h2 style="margin-top:.6rem">The 10-Minute Investor Starter Guide</h2>
             <p style="color:#c8d7ec">The 5 things that actually matter when you’re getting started — and the myths that keep people on the sidelines. No jargon, no sales pitch.</p>
             <div data-lead-done hidden><p class="notice" style="background:#e7f4ee;border-color:#bfe3cf;color:#245c42">✓ Check your inbox — your guide is on the way. Talk soon!</p></div>
-            <form data-lead id="home-lead" action="#" data-lead-wrap>
+            <form data-lead id="home-lead" action="${SITE.formEndpoint || '#'}" method="POST" data-lead-wrap>
               <div class="form-row">
                 <input type="email" name="email" required placeholder="you@email.com" aria-label="Email address">
                 <button class="btn btn--primary" type="submit">Send me the guide</button>
@@ -755,32 +812,37 @@ pages.push({
 /* ---------- ABOUT ---------- */
 pages.push({
   file: 'about.html', slug: 'about.html', active: 'about.html', prefix: '',
-  title: 'About BRG Financial | A Fiduciary Adviser in Greater Philadelphia',
-  description: 'Meet BRG Financial — an independent, fiduciary Registered Investment Adviser headquartered in Greater Philadelphia, serving clients nationwide with hands-on, transparent investment management.',
+  title: 'About Benjamin Gialloreto, CFA | BRG Financial',
+  description: 'Meet Benjamin Gialloreto, CFA — founder of BRG Financial, a fiduciary Registered Investment Adviser headquartered in Greater Philadelphia, serving clients nationwide.',
+  jsonld: [{
+    "@context": "https://schema.org", "@type": "Person", "name": "Benjamin R. Gialloreto", "honorificSuffix": "CFA",
+    "jobTitle": "Founder & Principal", "worksFor": { "@type": "FinancialService", "name": "BRG Financial" },
+    "alumniOf": "Immaculata University", "hasCredential": "Chartered Financial Analyst (CFA)",
+    "image": SITE.url + "/assets/img/ben-gialloreto.jpg", "url": SITE.url + "/about.html"
+  }],
   main: `
   ${pagehead('About', 'An independent adviser in your corner', '', '', 'About')}
   <section class="section">
     <div class="container split">
       <div>
         <h2>Why BRG Financial exists</h2>
-        <p>Too much of the industry runs on scripts and sales quotas. BRG Financial was built to be the opposite: an independent, fiduciary practice where you talk to the person actually managing your money, and where the strategy is tailored — not pulled off a shelf.</p>
-        <p>We serve individuals and families building wealth, people navigating a windfall or a major transition, and business owners who want to offer a retirement plan the right way. The common thread is a preference for straight talk and a real plan.</p>
-        <p>As a Registered Investment Adviser, we’re held to a fiduciary standard — legally obligated to act in your best interest, full stop.</p>
+        <p>BRG Financial, LLC is solely owned and operated by Benjamin Gialloreto, CFA. A former student-athlete at Immaculata University, Ben pursued a dual major in Finance and Business Management, graduating with Summa Cum Laude honors. Fueled by a passion for investments, he entered the financial industry and earned the CFA Charter in 2022 — and in the fall of 2023, founded BRG Financial, an asset management firm headquartered in Pennsylvania.</p>
+        <p>The objective at BRG is simple: help clients achieve their financial goals. We prioritize building enduring, impactful relationships and recognize the unique needs of each household — meticulously assessing every client’s financial landscape and aspirations, then tailoring custom solutions to optimize their financial journey.</p>
+        <p>Business aside, Ben loves spending time with family and friends — ideally in Wildwood Crest, NJ, where his family has spent summers for more than 70 years. He’s also a die-hard Philadelphia sports fan who never passes up an Eagles or Phillies game.</p>
+        <p>As a Registered Investment Adviser, BRG is held to a fiduciary standard — legally obligated to act in your best interest, full stop.</p>
         <a class="btn btn--navy" href="contact.html">Introduce yourself ${I.arrow}</a>
       </div>
       <div class="media">
         <div class="card">
-          <div style="display:flex;gap:16px;align-items:center;margin-bottom:1rem">
-            <div style="width:64px;height:64px;border-radius:50%;background:var(--navy-700);color:#fff;display:grid;place-items:center;font-family:var(--font-serif);font-size:1.5rem">B</div>
-            <div><h3 class="mb-0">${SITE.advisor}</h3><p class="mb-0" style="color:var(--muted);font-size:.9rem">${SITE.advisorRole}</p></div>
-          </div>
+          <img class="headshot" src="assets/img/ben-gialloreto.jpg" alt="Benjamin R. Gialloreto, CFA — Founder of BRG Financial" width="346" height="394">
+          <div style="margin:1.1rem 0 .8rem"><h3 class="mb-0">${SITE.advisor}</h3><p class="mb-0" style="color:var(--muted);font-size:.9rem">${SITE.advisorRole}</p></div>
           <p style="color:var(--muted)">Ben leads BRG Financial’s investment management and retirement work, combining a disciplined, tactical approach with a genuine commitment to educating clients along the way.</p>
           <ul class="checklist" style="margin-top:.6rem">
-            <li>Fiduciary, fee-based</li>
+            <li>CFA® Charterholder (2022)</li>
+            <li>B.S. Finance &amp; Business Management, Immaculata University — Summa Cum Laude</li>
+            <li>Founded BRG Financial, fall 2023</li>
             <li>Greater Philadelphia HQ · clients nationwide</li>
-            <li>Specialty in 401(k) &amp; ERISA</li>
           </ul>
-          <p class="calc-note">Bio blurb is placeholder copy — easy to swap for Ben’s full background and credentials.</p>
         </div>
       </div>
     </div>
@@ -839,7 +901,7 @@ pages.push({
       <h2>Get new articles in your inbox</h2>
       <div class="leadmag" data-lead-wrap style="text-align:left;margin-top:1.2rem">
         <div data-lead-done hidden><p class="notice" style="background:#e7f4ee;border-color:#bfe3cf;color:#245c42">✓ You’re subscribed — thanks!</p></div>
-        <form data-lead id="blog-lead" action="#">
+        <form data-lead id="blog-lead" action="${SITE.formEndpoint || '#'}" method="POST">
           <div class="form-row"><input type="email" name="email" required placeholder="you@email.com" aria-label="Email"><button class="btn btn--primary" type="submit">Subscribe</button></div>
         </form>
       </div>
@@ -860,6 +922,7 @@ POSTS.forEach((p, idx) => {
     file: 'blog/' + p.slug + '.html', slug: 'blog/' + p.slug + '.html', active: 'insights.html', prefix: '../',
     title: p.title + ' | BRG Financial',
     description: p.excerpt.replace(/"/g, "'"),
+    ogPath: 'assets/img/og/' + p.slug + '.png',
     main: `
     <article>
       <div class="post-hero">
@@ -942,7 +1005,7 @@ pages.push({
             <h2 style="margin-top:.6rem">The 10-Minute Investor Starter Guide</h2>
             <p style="color:#c8d7ec">Everything you actually need to begin — and the myths you can ignore. Enter your email and it’s yours.</p>
             <div data-lead-done hidden><p class="notice" style="background:#e7f4ee;border-color:#bfe3cf;color:#245c42">✓ Your guide is on the way — check your inbox!</p></div>
-            <form data-lead id="gs-lead" action="#">
+            <form data-lead id="gs-lead" action="${SITE.formEndpoint || '#'}" method="POST">
               <div class="field" style="margin-top:.6rem"><label style="color:#f1ede0">First name</label><input type="text" name="first_name" placeholder="First name"></div>
               <div class="form-row"><input type="email" name="email" required placeholder="you@email.com" aria-label="Email"><button class="btn btn--primary" type="submit">Send my guide</button></div>
               <p class="calc-note" style="color:#a8a396;margin-top:.6rem">We’ll never sell your info. Unsubscribe anytime.</p>
@@ -987,7 +1050,7 @@ pages.push({
         <div class="card">
           <h3 style="margin-top:0">Send a message</h3>
           <p data-form-msg="contact-form" hidden class="notice" style="background:#e7f4ee;border-color:#bfe3cf;color:#245c42">Opening your email app to send — or reach us directly above.</p>
-          <form id="contact-form" data-demo data-to="${SITE.email}" data-subject="Website inquiry from BRG Financial" action="#" method="post">
+          <form id="contact-form" data-demo data-to="${SITE.email}" data-subject="Website inquiry from BRG Financial" action="${SITE.formEndpoint || '#'}" method="POST"><input type="hidden" name="_subject" value="New inquiry — brgfinancial.net">
             <div class="field"><label for="cf-name">Name <span class="req">*</span></label><input id="cf-name" name="name" type="text" required></div>
             <div class="field"><label for="cf-email">Email <span class="req">*</span></label><input id="cf-email" name="email" type="email" required></div>
             <div class="field"><label for="cf-phone">Phone</label><input id="cf-phone" name="phone" type="tel"></div>
@@ -1012,6 +1075,38 @@ pages.push({
   jsonld: [{
     "@context": "https://schema.org", "@type": "ContactPage", "name": "Contact BRG Financial", "url": SITE.url + "/contact.html"
   }]
+});
+
+/* ---------- SCHEDULE ---------- */
+pages.push({
+  file: 'schedule.html', slug: 'schedule.html', active: 'contact.html', prefix: '',
+  title: 'Schedule an Appointment | BRG Financial',
+  description: 'Book a complimentary consultation with Benjamin R. Gialloreto, CFA — 20 minutes, no cost, no pressure. Greater Philadelphia HQ, serving clients nationwide.',
+  main: `
+  ${pagehead('Schedule', 'Book your complimentary consultation', 'Twenty minutes with ' + SITE.advisorShort + ' — your situation, your questions, straight answers. Phone or video, no cost, no pressure.', '', 'Schedule')}
+  <section class="section">
+    <div class="container" style="max-width:920px">
+      ${SITE.booking ? `
+      <div class="card" style="padding:8px;overflow:hidden">
+        <iframe src="${SITE.booking}" title="Schedule an appointment with BRG Financial" style="width:100%;height:760px;border:0;border-radius:10px" loading="lazy"></iframe>
+      </div>` : `
+      <div class="card center" style="padding:46px 30px">
+        <div class="ic-box" style="margin:0 auto 14px">${I.clock}</div>
+        <h2 style="margin-bottom:.4rem">Grab a time that works for you</h2>
+        <p class="lead" style="margin-inline:auto;max-width:52ch">Online self-serve booking plugs in right here (Calendly or any scheduling link — a one-line switch). Until it's live, reach out directly and we'll lock in a time same-day.</p>
+        <div class="hero-cta" style="justify-content:center;margin-top:1.2rem">
+          <a class="btn btn--primary btn--lg" href="tel:${SITE.tel}">${I.phone} Call ${SITE.phone}</a>
+          <a class="btn btn--navy btn--lg" href="mailto:${SITE.email}?subject=Appointment%20request">${I.mail} Email to book</a>
+          <a class="btn btn--ghost btn--lg" href="contact.html">Use the contact form</a>
+        </div>
+      </div>`}
+      <div class="grid grid-3" style="margin-top:26px">
+        <div class="card"><div class="ic-box">${I.clock}</div><h3 style="font-size:1.05rem">20 minutes</h3><p>A quick intro call — no prep needed, no paperwork.</p></div>
+        <div class="card"><div class="ic-box">${I.shield}</div><h3 style="font-size:1.05rem">No cost, no pressure</h3><p>If we're not the right fit, you'll still leave knowing more than you came with.</p></div>
+        <div class="card"><div class="ic-box">${I.pin}</div><h3 style="font-size:1.05rem">Phone or video</h3><p>Whatever's easiest — from Greater Philadelphia to anywhere nationwide.</p></div>
+      </div>
+    </div>
+  </section>`,
 });
 
 /* ---------- THANK YOU ---------- */
@@ -1187,9 +1282,17 @@ fs.writeFileSync(path.join(OUT, 'sitemap.xml'),
 fs.writeFileSync(path.join(OUT, 'robots.txt'),
   `User-agent: *\nAllow: /\nDisallow: /dashboard.html\nDisallow: /thank-you.html\n\nSitemap: ${SITE.url}/sitemap.xml\n`);
 
+/* ---- RSS feed ---- */
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const rssItems = POSTS.map(p => `  <item><title>${esc(p.title)}</title><link>${SITE.url}/blog/${p.slug}.html</link><guid>${SITE.url}/blog/${p.slug}.html</guid><pubDate>${new Date(p.date + 'T12:00:00Z').toUTCString()}</pubDate><description>${esc(p.excerpt)}</description></item>`).join('\n');
+fs.writeFileSync(path.join(OUT, 'feed.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel>\n<title>BRG Financial Insights</title><link>${SITE.url}/insights.html</link><description>Plain-English articles on investing and retirement from BRG Financial.</description>\n${rssItems}\n</channel></rss>\n`);
+
+/* ---- OG image manifest (consumed by the share-image renderer) ---- */
+fs.writeFileSync('/root/work/og-manifest.json', JSON.stringify(POSTS.map(p => ({ slug: p.slug, title: p.title, cat: p.cat })), null, 2));
+
 /* ---- favicon.svg + og placeholder note ---- */
 fs.writeFileSync(path.join(OUT, 'assets/img/favicon.svg'),
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#101012"/><path d="M13 34V14h9.2c3.9 0 6.3 1.9 6.3 5.1 0 2.2-1.2 3.7-3.2 4.4 2.5.5 4 2.2 4 4.8 0 3.5-2.6 5.7-6.8 5.7H13z" fill="#fff"/><path d="M31 34l4.8-10L31 14h4.3l2.7 6.4 2.7-6.4H45l-4.8 10L45 34h-4.4l-2.8-6.6L35 34h-4z" fill="#c9a227"/></svg>`);
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="#0b0b0c"/><text x="24" y="34" text-anchor="middle" font-family="Georgia,serif" font-size="30" font-weight="600" fill="#c9a227">B</text></svg>`);
 
 /* ---- CNAME hint (commented usage in README) ---- */
 console.log('Generated ' + pages.length + ' HTML pages + sitemap/robots/favicon.');

@@ -489,3 +489,33 @@ table.data td.num, table.data th.num { text-align:right; font-variant-numeric: t
 .contact-line .ic { background: var(--blue-050); color: var(--gold-600); }
 .hero-badges .chip { border-color: rgba(201,162,39,.35); }
 input:focus, select:focus, textarea:focus { border-color: var(--gold-500); box-shadow: 0 0 0 3px rgba(201,162,39,.18); }
+
+/* ===========================================================
+   BRAND WORDMARK · HEADSHOT · STICKY CALL BAR
+   =========================================================== */
+.wordmark {
+  display: inline-block; font-family: var(--font-serif); font-size: 1.4rem;
+  letter-spacing: .16em; color: var(--gold-600); font-weight: 620; line-height: 1;
+  border-bottom: 2.5px solid var(--gold-500); padding-bottom: 5px; white-space: nowrap;
+}
+.wordmark small {
+  display: block; font-family: var(--font-sans); font-weight: 600; font-size: .58rem;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin-top: 6px;
+}
+.wordmark--foot { color: var(--gold-500); }
+.wordmark--foot small { color: #8f8a7c; }
+@media (max-width: 480px) { .wordmark { font-size: 1.12rem; letter-spacing: .12em; } }
+
+.headshot { width: 100%; max-width: 340px; border-radius: 14px; box-shadow: var(--shadow-md); border: 1px solid var(--line); }
+
+.callbar { display: none; }
+@media (max-width: 820px) {
+  .callbar {
+    display: flex; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 70;
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+    background: rgba(11,11,12,.94); backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(201,162,39,.4);
+  }
+  .callbar .btn { flex: 1; justify-content: center; }
+  body { padding-bottom: 76px; }
+}
