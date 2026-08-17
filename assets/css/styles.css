@@ -305,3 +305,120 @@ table.data td.num, table.data th.num { text-align:right; font-variant-numeric: t
 .skip:focus { left:12px; top:12px; z-index:100; background:#fff; padding:10px 14px; border-radius:8px; box-shadow: var(--shadow-md); }
 .visually-hidden { position:absolute!important; width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0); }
 .mt-0{margin-top:0}.mb-0{margin-bottom:0}
+
+/* ===========================================================
+   VISUAL FX LAYER — motion, gradients, spectacle
+   =========================================================== */
+
+/* ---- Gradient text ---- */
+.grad-text {
+  background: linear-gradient(92deg, #e6c766 0%, #c9a227 55%, #e6c766 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+
+/* ---- Eyebrow accent dash ---- */
+.eyebrow { display: flex; align-items: center; gap: .6em; }
+.eyebrow::before { content: ""; width: 26px; height: 2px; background: var(--gold-500); flex: none; }
+.center .eyebrow, .center.measure .eyebrow { justify-content: center; }
+
+/* ---- Hero FX ---- */
+.hero--fx { isolation: isolate; }
+.hero--fx .container { padding-top: 92px; padding-bottom: 118px; }
+.orb { position: absolute; border-radius: 50%; filter: blur(70px); pointer-events: none; z-index: 0; }
+.orb--1 { width: 460px; height: 460px; background: #2e5fa3; top: -140px; right: -100px; opacity: .55; animation: floaty 11s ease-in-out infinite; }
+.orb--2 { width: 340px; height: 340px; background: #c9a227; bottom: -160px; left: -80px; opacity: .26; animation: floaty 14s ease-in-out infinite reverse; }
+.orb--3 { width: 200px; height: 200px; background: #3b74c4; top: 38%; left: 40%; opacity: .32; animation: floaty 9s ease-in-out infinite; }
+@keyframes floaty { 0%,100% { transform: translate(0,0) } 50% { transform: translate(26px,-22px) } }
+
+.hero-wave { position: absolute; bottom: -1px; left: 0; right: 0; line-height: 0; z-index: 1; }
+.hero-wave svg { width: 100%; height: 74px; display: block; }
+
+.hero-card.glass { background: rgba(255,255,255,.96); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.6); }
+
+/* Hero chart draw-on-load */
+.draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.6s var(--ease) forwards .3s; }
+.draw.d2 { animation-delay: .7s; }
+@keyframes draw { to { stroke-dashoffset: 0 } }
+.dot-pop { opacity: 0; animation: fadeIn .5s var(--ease) forwards 1.9s; }
+@keyframes fadeIn { to { opacity: 1 } }
+
+/* ---- Services ticker ---- */
+.ticker { overflow: hidden; background: var(--navy-900); border-top: 1px solid rgba(255,255,255,.07); position: relative; z-index: 2; }
+.ticker-track { display: flex; gap: 3.2rem; width: max-content; padding: 15px 0; animation: ticker 30s linear infinite; }
+.ticker:hover .ticker-track { animation-play-state: paused; }
+.ticker span { color: #9fb4d0; font-weight: 650; letter-spacing: .1em; text-transform: uppercase; font-size: .76rem; display: inline-flex; gap: .7em; align-items: center; white-space: nowrap; }
+.ticker .dia { color: var(--gold-500); font-size: .9em; }
+@keyframes ticker { to { transform: translateX(-50%) } }
+
+/* ---- Scroll reveal ---- */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ---- Button shine sweep ---- */
+.btn--primary { position: relative; overflow: hidden; }
+.btn--primary::after {
+  content: ""; position: absolute; top: 0; left: -70%; width: 44%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.6), transparent);
+  transform: skewX(-20deg); transition: left .55s var(--ease);
+}
+.btn--primary:hover::after { left: 130%; }
+
+/* ---- Card gradient border on hover ---- */
+.card { position: relative; }
+.card::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.6px;
+  background: linear-gradient(135deg, var(--gold-500), var(--blue-500) 70%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude; opacity: 0; transition: opacity .25s var(--ease); pointer-events: none;
+}
+.card:hover::after { opacity: 1; }
+.card:hover .ic-box { background: var(--navy-700); color: #fff; transform: scale(1.06) rotate(-3deg); }
+.card .ic-box { transition: background .25s, color .25s, transform .3s var(--ease); }
+
+/* ---- Decorated page headers (interior pages) ---- */
+.pagehead { position: relative; overflow: hidden; background: linear-gradient(180deg, #f0f5fc, #fafcff); }
+.pagehead::before {
+  content: ""; position: absolute; width: 560px; height: 560px; border-radius: 50%; right: -170px; top: -290px;
+  background: radial-gradient(circle, rgba(201,162,39,.18), transparent 62%); pointer-events: none;
+}
+.pagehead::after {
+  content: ""; position: absolute; width: 460px; height: 460px; border-radius: 50%; left: -200px; bottom: -320px;
+  background: radial-gradient(circle, rgba(46,95,163,.14), transparent 62%); pointer-events: none;
+}
+.pagehead .container { position: relative; z-index: 1; }
+
+/* ---- Navy sections glow ---- */
+.section--navy { position: relative; overflow: hidden; }
+.section--navy::before {
+  content: ""; position: absolute; width: 640px; height: 640px; border-radius: 50%; left: 50%; top: -420px; transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(201,162,39,.16), transparent 60%); pointer-events: none;
+}
+.section--navy .container { position: relative; z-index: 1; }
+
+/* ---- Leadmag decorative ring ---- */
+.leadmag::before {
+  content: ""; position: absolute; width: 380px; height: 380px; border-radius: 50%; right: -120px; top: -160px;
+  border: 60px solid rgba(255,255,255,.05); pointer-events: none;
+}
+
+/* ---- Brand hover ---- */
+.brand .mark { transition: transform .35s var(--ease); }
+.brand:hover .mark { transform: rotate(-6deg) scale(1.05); }
+
+/* ---- Compact topbar on phones ---- */
+@media (max-width: 700px) {
+  .topbar .container { justify-content: center; }
+  .topbar .container > .pill:first-child { display: none; }
+}
+@media (max-width: 480px) {
+  .topbar a.pill[href^="mailto"] { display: none; }
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  .orb, .ticker-track, .draw, .dot-pop { animation: none !important; }
+  .draw { stroke-dashoffset: 0; } .dot-pop { opacity: 1; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+}

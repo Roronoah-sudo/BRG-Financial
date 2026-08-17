@@ -98,6 +98,30 @@
     });
   });
 
+  /* ---- Scroll-reveal animations ---- */
+  (function () {
+    var sel = '.card, .kpi, .panel-card, .trust .item, .contact-line, .faq details, .leadmag, .stat, .split > *, .hero-card';
+    var els = Array.prototype.slice.call(document.querySelectorAll(sel));
+    // section headings too (but not ones living inside cards)
+    Array.prototype.slice.call(document.querySelectorAll('main h2')).forEach(function (h) {
+      if (!h.closest('.card') && !h.closest('.leadmag')) els.push(h);
+    });
+    els.forEach(function (el, i) {
+      el.classList.add('reveal');
+      el.style.transitionDelay = ((i % 5) * 70) + 'ms';
+    });
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+      els.forEach(function (el) { io.observe(el); });
+    } else {
+      els.forEach(function (el) { el.classList.add('in'); });
+    }
+  })();
+
   /* ---- Lead magnet capture (demo) ---- */
   document.querySelectorAll('form[data-lead]').forEach(function (form) {
     form.addEventListener('submit', function (e) {

@@ -384,12 +384,13 @@ pages.push({
   title: 'BRG Financial | Fee-Based Investment & 401(k) Advice in Greater Philadelphia',
   description: 'BRG Financial is a fiduciary Registered Investment Adviser in Greater Philadelphia serving PA & NJ. 401(k)/ERISA guidance, investment management, and retirement income strategies.',
   main: `
-  <section class="hero">
+  <section class="hero hero--fx">
+    <div class="orb orb--1"></div><div class="orb orb--2"></div><div class="orb orb--3"></div>
     <div class="container">
       <div class="hero-grid">
         <div>
           <p class="eyebrow" style="color:#e6c766">Fiduciary · Fee-based · Greater Philadelphia</p>
-          <h1>Grow your money with an adviser who actually explains it.</h1>
+          <h1>Grow your money with an adviser who <span class="grad-text">actually explains it.</span></h1>
           <p class="lead">BRG Financial is a fiduciary Registered Investment Adviser helping individuals, families, and business owners across ${SITE.area} invest with a real strategy — not a cookie-cutter script.</p>
           <div class="hero-badges">
             <span class="chip">${I.shield} Fiduciary, 100% of the time</span>
@@ -401,19 +402,34 @@ pages.push({
             <a class="btn btn--light btn--lg" href="tel:${SITE.tel}">${I.phone} ${SITE.phone}</a>
           </div>
         </div>
-        <div class="hero-card">
-          <p class="badge-soft">See the difference 10 years makes</p>
-          <h3 style="margin:.5rem 0 .2rem">What could you build?</h3>
-          <p style="color:var(--muted);font-size:.92rem;margin-bottom:.6rem">Investing $400/mo at an 8% average return:</p>
-          <div style="display:flex;gap:14px">
-            <div class="stat" style="flex:1;background:var(--bg-soft);border-radius:12px;padding:14px"><div class="num" style="font-size:1.7rem">$1.4M</div><div class="lbl">start at 25</div></div>
-            <div class="stat" style="flex:1;background:var(--bg-soft);border-radius:12px;padding:14px"><div class="num" style="font-size:1.7rem">$600k</div><div class="lbl">start at 35</div></div>
-          </div>
-          <p class="calc-note" style="margin-top:12px">Hypothetical, for illustration only. <a href="get-started.html">Run your own numbers &rsaquo;</a></p>
+        <div class="hero-card glass">
+          <p class="badge-soft">The 10-year head start</p>
+          <h3 style="margin:.5rem 0 .2rem">Same $400/month. Different start.</h3>
+          <svg viewBox="0 0 340 200" width="100%" role="img" aria-label="Growth comparison: starting at 25 versus 35" style="margin:.4rem 0 .2rem">
+            <line x1="18" y1="175" x2="326" y2="175" stroke="#e3e9f2" stroke-width="1.5"/>
+            <line x1="18" y1="120" x2="326" y2="120" stroke="#eef2f8" stroke-width="1"/>
+            <line x1="18" y1="65" x2="326" y2="65" stroke="#eef2f8" stroke-width="1"/>
+            <path class="draw d2" pathLength="1" d="M18 175 C 130 172, 240 152, 322 104" fill="none" stroke="#2e5fa3" stroke-width="3" stroke-linecap="round"/>
+            <path class="draw" pathLength="1" d="M18 175 C 110 168, 210 118, 322 26" fill="none" stroke="#c9a227" stroke-width="3.4" stroke-linecap="round"/>
+            <circle class="dot-pop" cx="322" cy="26" r="5" fill="#c9a227"/>
+            <circle class="dot-pop" cx="322" cy="104" r="5" fill="#2e5fa3"/>
+            <text class="dot-pop" x="316" y="18" text-anchor="end" font-size="13" font-weight="700" fill="#b8901f">$1.4M · start at 25</text>
+            <text class="dot-pop" x="316" y="96" text-anchor="end" font-size="13" font-weight="700" fill="#2e5fa3">$600k · start at 35</text>
+            <text x="18" y="192" font-size="10.5" fill="#8a97a8">age 25</text>
+            <text x="326" y="192" text-anchor="end" font-size="10.5" fill="#8a97a8">age 65</text>
+          </svg>
+          <p class="calc-note">Hypothetical, for illustration only — 8% avg. annual return. <a href="get-started.html">Run your own numbers &rsaquo;</a></p>
         </div>
       </div>
     </div>
+    <div class="hero-wave"><svg viewBox="0 0 1440 74" preserveAspectRatio="none"><path d="M0,40 C240,74 480,74 720,52 C960,30 1200,10 1440,34 L1440,74 L0,74 Z" fill="#ffffff"/></svg></div>
   </section>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      ${(() => { const items = ['401(k) &amp; ERISA Plans','Investment Management','Retirement Income','Roth Conversions','Fiduciary Advice','Tax-Aware Strategy','Greater Philadelphia · PA &amp; NJ']; const row = items.map(t => `<span><i class="dia">✦</i>${t}</span>`).join(''); return row + row; })()}
+    </div>
+  </div>
 
   <section class="trust">
     <div class="container">
