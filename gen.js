@@ -43,7 +43,7 @@ const I = {
   link: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>'
 };
 
-const LOGO = `<svg class="mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="48" height="48" rx="11" fill="#1f3864"/><path d="M13 34V14h9.2c3.9 0 6.3 1.9 6.3 5.1 0 2.2-1.2 3.7-3.2 4.4 2.5.5 4 2.2 4 4.8 0 3.5-2.6 5.7-6.8 5.7H13z" fill="#fff"/><path d="M17.7 22.2h3.7c1.7 0 2.7-.8 2.7-2.2 0-1.4-1-2.1-2.7-2.1h-3.7v4.3zm0 8.1h4c1.9 0 2.9-.8 2.9-2.4 0-1.5-1.1-2.4-3-2.4h-3.9v4.8z" fill="#1f3864"/><path d="M31 34l4.8-10L31 14h4.3l2.7 6.4 2.7-6.4H45l-4.8 10L45 34h-4.4l-2.8-6.6L35 34h-4z" fill="#c9a227"/></svg>`;
+const LOGO = `<svg class="mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="48" height="48" rx="11" fill="#101012"/><path d="M13 34V14h9.2c3.9 0 6.3 1.9 6.3 5.1 0 2.2-1.2 3.7-3.2 4.4 2.5.5 4 2.2 4 4.8 0 3.5-2.6 5.7-6.8 5.7H13z" fill="#fff"/><path d="M17.7 22.2h3.7c1.7 0 2.7-.8 2.7-2.2 0-1.4-1-2.1-2.7-2.1h-3.7v4.3zm0 8.1h4c1.9 0 2.9-.8 2.9-2.4 0-1.5-1.1-2.4-3-2.4h-3.9v4.8z" fill="#101012"/><path d="M31 34l4.8-10L31 14h4.3l2.7 6.4 2.7-6.4H45l-4.8 10L45 34h-4.4l-2.8-6.6L35 34h-4z" fill="#c9a227"/></svg>`;
 
 /* ---------- Navigation ---------- */
 const NAV = [
@@ -163,7 +163,7 @@ function layout(o) {
   <meta name="description" content="${desc}">
   <link rel="canonical" href="${canonical}">
   <meta name="robots" content="index,follow">
-  <meta name="theme-color" content="#1f3864">
+  <meta name="theme-color" content="#0b0b0c">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="${SITE.name}">
   <meta property="og:title" content="${title}">
@@ -211,7 +211,7 @@ function ctaBand(prefix) {
     <div class="container center measure" style="margin-inline:auto">
       <p class="eyebrow">Let's talk</p>
       <h2 style="color:#fff">A 20-minute intro call, no pressure and no cost</h2>
-      <p style="color:#c4d4ea">See whether we're a fit, get a straight answer about your situation, and leave with something useful either way.</p>
+      <p style="color:#d8d4c6">See whether we're a fit, get a straight answer about your situation, and leave with something useful either way.</p>
       <div class="hero-cta" style="justify-content:center;margin-top:1.2rem">
         <a class="btn btn--primary btn--lg" href="${prefix}contact.html">Book an intro call ${I.arrow}</a>
         <a class="btn btn--light btn--lg" href="tel:${SITE.tel}">${I.phone} ${SITE.phone}</a>
@@ -411,12 +411,12 @@ pages.push({
             <line x1="18" y1="175" x2="326" y2="175" stroke="#e3e9f2" stroke-width="1.5"/>
             <line x1="18" y1="120" x2="326" y2="120" stroke="#eef2f8" stroke-width="1"/>
             <line x1="18" y1="65" x2="326" y2="65" stroke="#eef2f8" stroke-width="1"/>
-            <path class="draw d2" pathLength="1" d="M18 175 C 130 172, 240 152, 322 104" fill="none" stroke="#2e5fa3" stroke-width="3" stroke-linecap="round"/>
+            <path class="draw d2" pathLength="1" d="M18 175 C 130 172, 240 152, 322 104" fill="none" stroke="#3a3a3e" stroke-width="3" stroke-linecap="round"/>
             <path class="draw" pathLength="1" d="M18 175 C 110 168, 210 118, 322 26" fill="none" stroke="#c9a227" stroke-width="3.4" stroke-linecap="round"/>
             <circle class="dot-pop" cx="322" cy="26" r="5" fill="#c9a227"/>
-            <circle class="dot-pop" cx="322" cy="104" r="5" fill="#2e5fa3"/>
+            <circle class="dot-pop" cx="322" cy="104" r="5" fill="#3a3a3e"/>
             <text class="dot-pop" x="316" y="18" text-anchor="end" font-size="13" font-weight="700" fill="#b8901f">$1.4M · start at 25</text>
-            <text class="dot-pop" x="316" y="96" text-anchor="end" font-size="13" font-weight="700" fill="#2e5fa3">$600k · start at 35</text>
+            <text class="dot-pop" x="316" y="96" text-anchor="end" font-size="13" font-weight="700" fill="#55524b">$600k · start at 35</text>
             <text x="18" y="192" font-size="10.5" fill="#8a97a8">age 25</text>
             <text x="326" y="192" text-anchor="end" font-size="10.5" fill="#8a97a8">age 65</text>
           </svg>
@@ -424,7 +424,21 @@ pages.push({
         </div>
       </div>
     </div>
-    <div class="hero-wave"><svg viewBox="0 0 1440 74" preserveAspectRatio="none"><path d="M0,40 C240,74 480,74 720,52 C960,30 1200,10 1440,34 L1440,74 L0,74 Z" fill="#ffffff"/></svg></div>
+    <div class="hero-skyline" aria-hidden="true"><svg viewBox="0 0 1440 300" preserveAspectRatio="xMidYMax slice">
+      <rect x="410" y="58" width="3" height="36" fill="#0b0b0c"/>
+      <rect x="549" y="66" width="4" height="30" fill="#0b0b0c"/>
+      <rect x="682" y="94" width="3" height="30" fill="#0b0b0c"/>
+      <rect x="1088" y="140" width="3" height="34" fill="#0b0b0c"/>
+      <path fill="#0b0b0c" d="M0 300 L0 235 H50 V210 H80 V235 H108 V180 H160 V235 H185 V200 H225 V240 H255 V160 H310 V240 H335 V205 H370 V240 H392 V130 L412 92 L432 130 V245 H460 V210 H492 V245 H520 V96 H584 V245 H610 V225 H648 V245 H668 V150 L684 122 L700 150 V245 H730 V205 H768 V245 H800 V180 H852 V245 H878 V215 H916 V245 H944 V170 H992 V245 H1016 V225 H1052 V245 H1080 V186 H1096 V172 H1112 V186 H1144 V245 H1170 V220 H1206 V245 H1230 V195 H1274 V245 H1298 V225 H1330 V245 H1356 V210 H1392 V245 H1440 V235 L1440 300 Z"/>
+      <g fill="#c9a227" opacity=".55">
+        <rect x="530" y="120" width="5" height="4"/><rect x="545" y="140" width="5" height="4"/><rect x="562" y="112" width="5" height="4"/><rect x="552" y="170" width="5" height="4"/><rect x="536" y="195" width="5" height="4"/>
+        <rect x="400" y="150" width="4" height="4"/><rect x="416" y="176" width="4" height="4"/><rect x="408" y="205" width="4" height="4"/>
+        <rect x="270" y="180" width="4" height="4"/><rect x="288" y="205" width="4" height="4"/>
+        <rect x="676" y="168" width="4" height="4"/><rect x="688" y="192" width="4" height="4"/>
+        <rect x="956" y="190" width="4" height="4"/><rect x="972" y="212" width="4" height="4"/>
+        <rect x="1240" y="212" width="4" height="4"/><rect x="1090" y="200" width="4" height="4"/>
+      </g>
+    </svg></div>
   </section>
 
   <div class="ticker" aria-hidden="true">
@@ -511,16 +525,16 @@ pages.push({
                 <input type="email" name="email" required placeholder="you@email.com" aria-label="Email address">
                 <button class="btn btn--primary" type="submit">Send me the guide</button>
               </div>
-              <p class="calc-note" style="color:#9fb4d0;margin-top:.6rem">We’ll never sell your info. Unsubscribe anytime.</p>
+              <p class="calc-note" style="color:#a8a396;margin-top:.6rem">We’ll never sell your info. Unsubscribe anytime.</p>
             </form>
           </div>
           <div class="media">
             <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:22px">
               <ul class="checklist" style="margin:0">
-                <li style="color:#eaf1fb">Start with the match — free money first</li>
-                <li style="color:#eaf1fb">Automate so the decision is made once</li>
-                <li style="color:#eaf1fb">Roth vs. traditional, decoded</li>
-                <li style="color:#eaf1fb">What you can safely ignore</li>
+                <li style="color:#f1ede0">Start with the match — free money first</li>
+                <li style="color:#f1ede0">Automate so the decision is made once</li>
+                <li style="color:#f1ede0">Roth vs. traditional, decoded</li>
+                <li style="color:#f1ede0">What you can safely ignore</li>
               </ul>
             </div>
           </div>
@@ -635,10 +649,10 @@ pages.push({
         <a class="btn btn--navy" href="contact.html">Explore a plan for your business ${I.arrow}</a>
       </div>
       <div class="media">
-        <div class="card" style="background:var(--navy-800);color:#dbe6f5;border:none">
+        <div class="card" style="background:var(--navy-800);color:#e6e1d3;border:none">
           <p class="eyebrow" style="color:var(--gold-500)">Why it matters</p>
           <h3 style="color:#fff">The fiduciary duty is real</h3>
-          <p style="color:#c4d4ea">Under ERISA, running a plan “well enough” isn’t the standard — acting in participants’ best interest with a documented process is. We make that manageable instead of intimidating.</p>
+          <p style="color:#d8d4c6">Under ERISA, running a plan “well enough” isn’t the standard — acting in participants’ best interest with a documented process is. We make that manageable instead of intimidating.</p>
         </div>
       </div>
     </div>
@@ -903,17 +917,17 @@ pages.push({
           <div class="field"><label>Years invested <span class="val" id="c-years-v">30 yrs</span></label><input type="range" id="c-years" min="1" max="45" step="1" value="30"></div>
           <div class="field"><label>Average annual return <span class="val" id="c-rate-v">8.0%</span></label><input type="range" id="c-rate" min="1" max="12" step="0.5" value="8"></div>
         </div>
-        <div class="panel" style="display:flex;flex-direction:column;justify-content:center;background:var(--navy-800);color:#dbe6f5;border:none">
+        <div class="panel" style="display:flex;flex-direction:column;justify-content:center;background:var(--navy-800);color:#e6e1d3;border:none">
           <div class="calc-result">
             <p class="eyebrow" style="color:var(--gold-500)">Projected value</p>
             <div class="big" id="c-out" style="color:#fff">$0</div>
           </div>
           <div class="grid grid-2" style="gap:12px;margin-top:1rem">
-            <div style="background:rgba(255,255,255,.08);border-radius:10px;padding:12px;text-align:center"><div style="font-size:.78rem;color:#9fb4d0">You put in</div><div id="c-contrib" style="font-family:var(--font-serif);font-size:1.3rem;color:#fff">$0</div></div>
-            <div style="background:rgba(255,255,255,.08);border-radius:10px;padding:12px;text-align:center"><div style="font-size:.78rem;color:#9fb4d0">Growth</div><div id="c-growth" style="font-family:var(--font-serif);font-size:1.3rem;color:var(--gold-500)">$0</div></div>
+            <div style="background:rgba(255,255,255,.08);border-radius:10px;padding:12px;text-align:center"><div style="font-size:.78rem;color:#a8a396">You put in</div><div id="c-contrib" style="font-family:var(--font-serif);font-size:1.3rem;color:#fff">$0</div></div>
+            <div style="background:rgba(255,255,255,.08);border-radius:10px;padding:12px;text-align:center"><div style="font-size:.78rem;color:#a8a396">Growth</div><div id="c-growth" style="font-family:var(--font-serif);font-size:1.3rem;color:var(--gold-500)">$0</div></div>
           </div>
-          <p style="margin-top:1rem;font-size:.86rem;color:#c4d4ea">Waiting 5 years to start could cost you about <strong id="c-delay" style="color:#fff">$0</strong> in ending value.</p>
-          <p class="calc-note" style="color:#9fb4d0">Hypothetical illustration only; not a prediction. Actual returns vary and you can lose money.</p>
+          <p style="margin-top:1rem;font-size:.86rem;color:#d8d4c6">Waiting 5 years to start could cost you about <strong id="c-delay" style="color:#fff">$0</strong> in ending value.</p>
+          <p class="calc-note" style="color:#a8a396">Hypothetical illustration only; not a prediction. Actual returns vary and you can lose money.</p>
         </div>
       </div>
     </div>
@@ -929,19 +943,19 @@ pages.push({
             <p style="color:#c8d7ec">Everything you actually need to begin — and the myths you can ignore. Enter your email and it’s yours.</p>
             <div data-lead-done hidden><p class="notice" style="background:#e7f4ee;border-color:#bfe3cf;color:#245c42">✓ Your guide is on the way — check your inbox!</p></div>
             <form data-lead id="gs-lead" action="#">
-              <div class="field" style="margin-top:.6rem"><label style="color:#eaf1fb">First name</label><input type="text" name="first_name" placeholder="First name"></div>
+              <div class="field" style="margin-top:.6rem"><label style="color:#f1ede0">First name</label><input type="text" name="first_name" placeholder="First name"></div>
               <div class="form-row"><input type="email" name="email" required placeholder="you@email.com" aria-label="Email"><button class="btn btn--primary" type="submit">Send my guide</button></div>
-              <p class="calc-note" style="color:#9fb4d0;margin-top:.6rem">We’ll never sell your info. Unsubscribe anytime.</p>
+              <p class="calc-note" style="color:#a8a396;margin-top:.6rem">We’ll never sell your info. Unsubscribe anytime.</p>
             </form>
           </div>
           <div class="media">
             <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:22px">
               <h4 style="color:#fff">Inside the guide</h4>
               <ul class="checklist" style="margin:.6rem 0 0">
-                <li style="color:#eaf1fb">The 5 moves that matter most</li>
-                <li style="color:#eaf1fb">How much you really need to start</li>
-                <li style="color:#eaf1fb">Roth vs. traditional in one page</li>
-                <li style="color:#eaf1fb">A simple first-year checklist</li>
+                <li style="color:#f1ede0">The 5 moves that matter most</li>
+                <li style="color:#f1ede0">How much you really need to start</li>
+                <li style="color:#f1ede0">Roth vs. traditional in one page</li>
+                <li style="color:#f1ede0">A simple first-year checklist</li>
               </ul>
             </div>
           </div>
@@ -1064,11 +1078,11 @@ pages.push({
           <h3>Conversion funnel</h3>
           <p class="sub">Visitor → lead → booked call → client</p>
           <div style="margin-top:1rem">
-            <div class="funnel-row"><span class="flabel">Visitors</span><div class="funnel-bar" style="width:100%;background:#2e5fa3">806</div></div>
-            <div class="funnel-row"><span class="flabel">Engaged (2+ pages)</span><div class="funnel-bar" style="width:64%;background:#3b74c4">516</div></div>
-            <div class="funnel-row"><span class="flabel">Leads captured</span><div class="funnel-bar" style="width:31%;background:#2f8b76">50</div></div>
-            <div class="funnel-row"><span class="flabel">Booked intro call</span><div class="funnel-bar" style="width:14%;background:#c9a227">18</div></div>
-            <div class="funnel-row"><span class="flabel">Became client</span><div class="funnel-bar" style="width:5%;background:#b5533c">4</div></div>
+            <div class="funnel-row"><span class="flabel">Visitors</span><div class="funnel-bar" style="width:100%;background:#1e1e21">806</div></div>
+            <div class="funnel-row"><span class="flabel">Engaged (2+ pages)</span><div class="funnel-bar" style="width:64%;background:#44403a">516</div></div>
+            <div class="funnel-row"><span class="flabel">Leads captured</span><div class="funnel-bar" style="width:31%;background:#c9a227">50</div></div>
+            <div class="funnel-row"><span class="flabel">Booked intro call</span><div class="funnel-bar" style="width:14%;background:#8a6d1a">18</div></div>
+            <div class="funnel-row"><span class="flabel">Became client</span><div class="funnel-bar" style="width:5%;background:#9a4a35">4</div></div>
           </div>
         </div>
       </div>
@@ -1175,7 +1189,7 @@ fs.writeFileSync(path.join(OUT, 'robots.txt'),
 
 /* ---- favicon.svg + og placeholder note ---- */
 fs.writeFileSync(path.join(OUT, 'assets/img/favicon.svg'),
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#1f3864"/><path d="M13 34V14h9.2c3.9 0 6.3 1.9 6.3 5.1 0 2.2-1.2 3.7-3.2 4.4 2.5.5 4 2.2 4 4.8 0 3.5-2.6 5.7-6.8 5.7H13z" fill="#fff"/><path d="M31 34l4.8-10L31 14h4.3l2.7 6.4 2.7-6.4H45l-4.8 10L45 34h-4.4l-2.8-6.6L35 34h-4z" fill="#c9a227"/></svg>`);
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="11" fill="#101012"/><path d="M13 34V14h9.2c3.9 0 6.3 1.9 6.3 5.1 0 2.2-1.2 3.7-3.2 4.4 2.5.5 4 2.2 4 4.8 0 3.5-2.6 5.7-6.8 5.7H13z" fill="#fff"/><path d="M31 34l4.8-10L31 14h4.3l2.7 6.4 2.7-6.4H45l-4.8 10L45 34h-4.4l-2.8-6.6L35 34h-4z" fill="#c9a227"/></svg>`);
 
 /* ---- CNAME hint (commented usage in README) ---- */
 console.log('Generated ' + pages.length + ' HTML pages + sitemap/robots/favicon.');

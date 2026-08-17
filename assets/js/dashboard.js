@@ -5,8 +5,8 @@
 (function () {
   "use strict";
 
-  var PAL = ['#2e5fa3', '#2f8b76', '#c9a227', '#6c6fb5', '#46738f', '#b5533c'];
-  var GRID = '#e3e9f2', MUTED = '#5f6b7a', INK = '#33404f';
+  var PAL = ['#c9a227', '#1e1e21', '#8a6d1a', '#6e6255', '#a3874a', '#44403a'];
+  var GRID = '#e9e5d9', MUTED = '#6b675c', INK = '#3a372f';
   var NS = 'http://www.w3.org/2000/svg';
 
   function el(id) { return document.getElementById(id); }
