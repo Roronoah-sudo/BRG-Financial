@@ -14,7 +14,9 @@ const SITE = {
   tel: '+14843682477',
   email: 'info@brgfinancial.net',
   area: 'Greater Philadelphia · PA & NJ',
-  advisor: 'Ben R. Grant',            // placeholder name — easy to swap
+  reach: 'Serving clients nationwide',
+  advisor: 'Benjamin R. Gialloreto',
+  advisorShort: 'Ben',
   advisorRole: 'Principal & Investment Adviser Representative'
 };
 
@@ -89,7 +91,7 @@ function footer(prefix) {
       <div class="foot-grid">
         <div class="foot-brand">
           <div class="name">${SITE.name}</div>
-          <p style="margin-top:.6rem;max-width:34ch">Fee-based investment management and retirement guidance for individuals, families, and business retirement plans across ${SITE.area}.</p>
+          <p style="margin-top:.6rem;max-width:34ch">Fee-based investment management and retirement guidance for individuals, families, and business retirement plans. Headquartered in ${SITE.area} — serving clients nationwide.</p>
           <p style="margin-top:.4rem"><a href="tel:${SITE.tel}">${SITE.phone}</a><br><a href="mailto:${SITE.email}">${SITE.email}</a></p>
         </div>
         <div>
@@ -143,10 +145,10 @@ function layout(o) {
     "url": SITE.url,
     "telephone": SITE.phone,
     "email": SITE.email,
-    "areaServed": ["Philadelphia", "Pennsylvania", "New Jersey"],
+    "areaServed": ["Philadelphia", "Pennsylvania", "New Jersey", "United States"],
     "address": { "@type": "PostalAddress", "addressRegion": "PA", "addressLocality": "Greater Philadelphia", "addressCountry": "US" },
     "priceRange": "Fee-based",
-    "description": "Fee-based Registered Investment Adviser offering 401(k)/ERISA plan guidance, investment management, and retirement income strategies across Greater Philadelphia, PA and NJ.",
+    "description": "Fee-based Registered Investment Adviser headquartered in Greater Philadelphia (PA & NJ), serving clients nationwide with 401(k)/ERISA plan guidance, investment management, and retirement income strategies.",
     "sameAs": ["https://www.linkedin.com/"]
   };
   const lds = [orgLd].concat(o.jsonld || []);
@@ -382,7 +384,7 @@ const pages = [];
 pages.push({
   file: 'index.html', slug: '', active: '', prefix: '',
   title: 'BRG Financial | Fee-Based Investment & 401(k) Advice in Greater Philadelphia',
-  description: 'BRG Financial is a fiduciary Registered Investment Adviser in Greater Philadelphia serving PA & NJ. 401(k)/ERISA guidance, investment management, and retirement income strategies.',
+  description: 'BRG Financial is a fiduciary Registered Investment Adviser headquartered in Greater Philadelphia (PA & NJ), serving clients nationwide. 401(k)/ERISA guidance, investment management, and retirement income strategies.',
   main: `
   <section class="hero hero--fx">
     <div class="orb orb--1"></div><div class="orb orb--2"></div><div class="orb orb--3"></div>
@@ -391,7 +393,7 @@ pages.push({
         <div>
           <p class="eyebrow" style="color:#e6c766">Fiduciary · Fee-based · Greater Philadelphia</p>
           <h1>Grow your money with an adviser who <span class="grad-text">actually explains it.</span></h1>
-          <p class="lead">BRG Financial is a fiduciary Registered Investment Adviser helping individuals, families, and business owners across ${SITE.area} invest with a real strategy — not a cookie-cutter script.</p>
+          <p class="lead">BRG Financial is a fiduciary Registered Investment Adviser headquartered in Greater Philadelphia — helping individuals, families, and business owners nationwide invest with a real strategy, not a cookie-cutter script.</p>
           <div class="hero-badges">
             <span class="chip">${I.shield} Fiduciary, 100% of the time</span>
             <span class="chip">${I.seed} 401(k) &amp; ERISA specialist</span>
@@ -427,14 +429,14 @@ pages.push({
 
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track">
-      ${(() => { const items = ['401(k) &amp; ERISA Plans','Investment Management','Retirement Income','Roth Conversions','Fiduciary Advice','Tax-Aware Strategy','Greater Philadelphia · PA &amp; NJ']; const row = items.map(t => `<span><i class="dia">✦</i>${t}</span>`).join(''); return row + row; })()}
+      ${(() => { const items = ['401(k) &amp; ERISA Plans','Investment Management','Retirement Income','Roth Conversions','Fiduciary Advice','Tax-Aware Strategy','Greater Philadelphia HQ · Serving Clients Nationwide']; const row = items.map(t => `<span><i class="dia">✦</i>${t}</span>`).join(''); return row + row; })()}
     </div>
   </div>
 
   <section class="trust">
     <div class="container">
       <div class="item">${I.shield}<div class="ic" style="display:none"></div><div><strong>Fiduciary duty</strong><span>Legally required to act in your interest</span></div></div>
-      <div class="item">${I.pin}<div><strong>${SITE.area}</strong><span>Registered in PA &amp; NJ</span></div></div>
+      <div class="item">${I.pin}<div><strong>Greater Philadelphia HQ</strong><span>Serving clients nationwide</span></div></div>
       <div class="item">${I.scale}<div><strong>Transparent, fee-based</strong><span>No hidden commissions</span></div></div>
       <div class="item">${I.spark}<div><strong>Real strategy</strong><span>Not an off-the-shelf model</span></div></div>
     </div>
@@ -538,7 +540,7 @@ pages.push({
 pages.push({
   file: 'services.html', slug: 'services.html', active: 'services.html', prefix: '',
   title: 'Services | Investment Management, 401(k) & Retirement | BRG Financial',
-  description: 'Fee-based investment management, 401(k) & ERISA plan guidance, and retirement income strategies for clients across Greater Philadelphia, PA and NJ.',
+  description: 'Fee-based investment management, 401(k) & ERISA plan guidance, and retirement income strategies — headquartered in Greater Philadelphia, serving clients nationwide.',
   main: `
   ${pagehead('What we do', 'Services built around your goals, not a product shelf', 'Everything here is delivered under a fiduciary standard and explained in plain language. No formal cookie-cutter package — just the work your situation actually calls for.', '', 'Services')}
   <section class="section">
@@ -577,7 +579,7 @@ function SERVICE_FAQ() {
     { q: 'How much does working with BRG Financial cost?', a: '<p>We’re fee-based and transparent. Investment management is typically billed as a percentage of the assets we manage for you, and we’ll always put our fiduciary commitment in writing. There are no hidden commissions. On an intro call we’ll walk through exactly what you’d pay and what’s included.</p>' },
     { q: 'Is there a minimum to get started?', a: '<p>We work with clients at different stages, from those just beginning to invest to those managing a significant windfall. The best first step is a short call so we can point you in the right direction — even if that’s “keep doing what you’re doing for now.”</p>' },
     { q: 'Are you a fiduciary?', a: '<p>Yes — 100% of the time. As a Registered Investment Adviser we’re legally obligated to act in your best interest, and we’re happy to state that in writing.</p>' },
-    { q: 'Which states can you work with clients in?', a: '<p>We’re registered in Pennsylvania and New Jersey and can serve clients in a number of other states on request. If you’re outside PA or NJ, just ask and we’ll confirm.</p>' },
+    { q: 'Which states can you work with clients in?', a: '<p>We’re headquartered in Greater Philadelphia and registered in Pennsylvania and New Jersey — and we’re able to work with clients nationwide. If you’re in another state, just ask and we’ll confirm the details for your state.</p>' },
     { q: 'Do you provide a formal written financial plan?', a: '<p>Our planning is done as an integrated part of managing your money — detailed projections, tax-aware strategy, and scenario modeling specific to you — rather than sold as a separate written-plan product. You’ll always understand where you stand and what the plan is.</p>' }
   ];
 }
@@ -586,7 +588,7 @@ function SERVICE_FAQ() {
 pages.push({
   file: '401k-erisa.html', slug: '401k-erisa.html', active: '401k-erisa.html', prefix: '',
   title: '401(k), 403(b) & ERISA Plan Services | BRG Financial (PA & NJ)',
-  description: 'ERISA 401(k) and 403(b) plan guidance for employees and employers in Greater Philadelphia, PA & NJ. Rollovers, plan design, fiduciary support, and low-cost investment lineups.',
+  description: 'ERISA 401(k) and 403(b) plan guidance for employees and employers — Greater Philadelphia HQ, serving clients nationwide. Rollovers, plan design, fiduciary support, and low-cost investment lineups.',
   main: `
   ${pagehead('Our specialty', '401(k), 403(b) &amp; ERISA plan services', 'A less crowded, deeply important corner of financial services — and one we know well. Whether you’re an employee with an old 401(k) or a business owner sponsoring a plan, here’s how we help.', '', '401(k) &amp; ERISA')}
 
@@ -668,7 +670,7 @@ function K401_FAQ() {
 pages.push({
   file: 'investment-management.html', slug: 'investment-management.html', active: '', prefix: '',
   title: 'Investment Management | Active, Tactical Portfolios | BRG Financial',
-  description: 'Actively managed, tactical investment portfolios with growth tilts and alternatives — built to be efficient. Fiduciary, fee-based, serving PA & NJ.',
+  description: 'Actively managed, tactical investment portfolios with growth tilts and alternatives — built to be efficient. Fiduciary, fee-based, headquartered in Greater Philadelphia — clients nationwide.',
   main: `
   ${pagehead('How we invest', 'Active, tactical, and built to be efficient', 'We use low-cost building blocks — but how we assemble them is where the strategy lives. Here’s the philosophy in plain terms.', '', 'Investment Management')}
   <section class="section">
@@ -711,7 +713,7 @@ pages.push({
 pages.push({
   file: 'retirement-income.html', slug: 'retirement-income.html', active: '', prefix: '',
   title: 'Retirement Income & Tax-Aware Strategy | BRG Financial',
-  description: 'Withdrawal sequencing, Social Security timing, and Roth conversion strategy modeled through retirement. Fiduciary, fee-based, serving Greater Philadelphia, PA & NJ.',
+  description: 'Withdrawal sequencing, Social Security timing, and Roth conversion strategy modeled through retirement. Fiduciary, fee-based — Greater Philadelphia HQ, clients nationwide.',
   main: `
   ${pagehead('Planning for the years that count', 'Turn savings into a paycheck that lasts', 'Accumulating is one job; drawing it down wisely is another. We model your retirement in detail so decisions are grounded in numbers, not guesses.', '', 'Retirement Income')}
   <section class="section">
@@ -740,7 +742,7 @@ pages.push({
 pages.push({
   file: 'about.html', slug: 'about.html', active: 'about.html', prefix: '',
   title: 'About BRG Financial | A Fiduciary Adviser in Greater Philadelphia',
-  description: 'Meet BRG Financial — an independent, fiduciary Registered Investment Adviser serving Greater Philadelphia, PA & NJ with hands-on, transparent investment management.',
+  description: 'Meet BRG Financial — an independent, fiduciary Registered Investment Adviser headquartered in Greater Philadelphia, serving clients nationwide with hands-on, transparent investment management.',
   main: `
   ${pagehead('About', 'An independent adviser in your corner', '', '', 'About')}
   <section class="section">
@@ -761,10 +763,10 @@ pages.push({
           <p style="color:var(--muted)">Ben leads BRG Financial’s investment management and retirement work, combining a disciplined, tactical approach with a genuine commitment to educating clients along the way.</p>
           <ul class="checklist" style="margin-top:.6rem">
             <li>Fiduciary, fee-based</li>
-            <li>Registered in PA &amp; NJ</li>
+            <li>Greater Philadelphia HQ · clients nationwide</li>
             <li>Specialty in 401(k) &amp; ERISA</li>
           </ul>
-          <p class="calc-note">Bio details are placeholders for the demo — easy to update with Ben’s real background and credentials.</p>
+          <p class="calc-note">Bio blurb is placeholder copy — easy to swap for Ben’s full background and credentials.</p>
         </div>
       </div>
     </div>
@@ -787,7 +789,7 @@ const ALL_FAQ = [
   { q: 'What does it cost to work with BRG Financial?', a: '<p>We’re fee-based and transparent — investment management is typically a percentage of assets we manage for you, always under a fiduciary commitment we’ll put in writing. No hidden commissions. We’ll walk through exact numbers on an intro call.</p>' },
   { q: 'Are you a fiduciary?', a: '<p>Yes, 100% of the time. As a Registered Investment Adviser we’re legally required to act in your best interest.</p>' },
   { q: 'Is there an account minimum?', a: '<p>We work with clients at a range of stages. The best first step is a short, no-cost call to see where you stand and whether we’re a fit.</p>' },
-  { q: 'What states can you serve clients in?', a: '<p>We’re registered in Pennsylvania and New Jersey and can work with clients in several other states on request. Just ask and we’ll confirm your state.</p>' },
+  { q: 'What states can you serve clients in?', a: '<p>We’re headquartered in Greater Philadelphia and registered in Pennsylvania and New Jersey — and we’re able to work with clients nationwide. Just ask and we’ll confirm the details for your state.</p>' },
   { q: 'Should I roll over my old 401(k)?', a: '<p>Sometimes yes, sometimes no — it depends on fees, options, taxes, and your goals. We’ll review the specifics before recommending anything. See our <a href="401k-erisa.html">401(k) &amp; ERISA services</a>.</p>' },
   { q: 'What’s the difference between Roth and traditional?', a: '<p>Traditional is generally pre-tax now and taxed at withdrawal; Roth is after-tax now and tax-free later. Which wins depends on your tax rate today versus in retirement. We break it down in <a href="blog/roth-vs-traditional.html">this article</a>.</p>' },
   { q: 'Do you offer a formal written financial plan?', a: '<p>We do the planning work — projections, tax strategy, scenario and Monte Carlo modeling — as an integrated part of managing your money, tailored to you, rather than as a separate written-plan product.</p>' },
@@ -796,7 +798,7 @@ const ALL_FAQ = [
 pages.push({
   file: 'faq.html', slug: 'faq.html', active: '', prefix: '',
   title: 'Frequently Asked Questions | BRG Financial',
-  description: 'Answers on fees, fiduciary duty, account minimums, 401(k) rollovers, Roth vs. traditional, and how BRG Financial invests. Serving Greater Philadelphia, PA & NJ.',
+  description: 'Answers on fees, fiduciary duty, account minimums, 401(k) rollovers, Roth vs. traditional, and how BRG Financial invests. Greater Philadelphia HQ — serving clients nationwide.',
   main: `
   ${pagehead('Answers', 'Frequently asked questions', 'Straightforward answers to what people ask most. Still curious? A quick call is the fastest way to a real answer.', '', 'FAQ')}
   <section class="section"><div class="container">${faqBlock(ALL_FAQ)}</div></section>
@@ -887,7 +889,7 @@ POSTS.forEach((p, idx) => {
 pages.push({
   file: 'get-started.html', slug: 'get-started.html', active: '', prefix: '',
   title: 'Free Investor Guide + Growth Calculator | BRG Financial',
-  description: 'Download BRG Financial’s free 10-Minute Investor Starter Guide and use the compound-growth calculator to see the cost of waiting. Greater Philadelphia, PA & NJ.',
+  description: 'Download BRG Financial’s free 10-Minute Investor Starter Guide and use the compound-growth calculator to see the cost of waiting. Greater Philadelphia HQ — serving clients nationwide.',
   main: `
   ${pagehead('Start here', 'See what your money could do — then get the guide', 'Play with the numbers below, then grab the free starter guide. No cost, no obligation, no jargon.', '', 'Get Started')}
   <section class="section">
@@ -954,7 +956,7 @@ pages.push({
 pages.push({
   file: 'contact.html', slug: 'contact.html', active: 'contact.html', prefix: '',
   title: 'Contact BRG Financial | Book a No-Cost Intro Call',
-  description: 'Get in touch with BRG Financial. Call, email, or send a message to book a no-cost 20-minute intro call. Serving Greater Philadelphia, PA & NJ.',
+  description: 'Get in touch with BRG Financial. Call, email, or send a message to book a no-cost 20-minute intro call. Greater Philadelphia HQ — serving clients nationwide.',
   main: `
   ${pagehead('Contact', 'Let’s talk', 'Book a no-cost, 20-minute intro call. Tap to call or email directly, or send the form and we’ll get right back to you.', '', 'Contact')}
   <section class="section">
@@ -963,7 +965,7 @@ pages.push({
         <h2 style="margin-top:0">Reach us directly</h2>
         <div class="contact-line"><div class="ic">${I.phone}</div><div><div style="font-size:.82rem;color:var(--muted)">Call or text</div><a href="tel:${SITE.tel}">${SITE.phone}</a></div></div>
         <div class="contact-line"><div class="ic">${I.mail}</div><div><div style="font-size:.82rem;color:var(--muted)">Email</div><a href="mailto:${SITE.email}">${SITE.email}</a></div></div>
-        <div class="contact-line"><div class="ic">${I.pin}</div><div><div style="font-size:.82rem;color:var(--muted)">Serving</div><strong style="color:var(--ink)">${SITE.area}</strong></div></div>
+        <div class="contact-line"><div class="ic">${I.pin}</div><div><div style="font-size:.82rem;color:var(--muted)">Serving</div><strong style="color:var(--ink)">Headquartered in ${SITE.area} — clients nationwide</strong></div></div>
         <div class="contact-line" style="border-bottom:none"><div class="ic">${I.clock}</div><div><div style="font-size:.82rem;color:var(--muted)">Response time</div><strong style="color:var(--ink)">Usually within one business day</strong></div></div>
         <div class="notice" style="margin-top:1.4rem">Prefer LinkedIn? <a href="https://www.linkedin.com/" rel="noopener">Connect with Ben ${I.arrow}</a></div>
       </div>

@@ -107,9 +107,14 @@ p { margin: 0 0 1rem; }
   backdrop-filter: saturate(160%) blur(10px); border-bottom: 1px solid var(--line);
 }
 .topbar { background: var(--navy-800); color: #cdddf1; font-size: .82rem; }
-.topbar .container { display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 38px; flex-wrap: wrap; }
-.topbar a { color: #eaf1fb; font-weight: 600; }
-.topbar .pill { display: inline-flex; align-items: center; gap: .4em; }
+.topbar .container { display: flex; justify-content: space-between; align-items: center; gap: 1rem; min-height: 40px; flex-wrap: wrap; }
+.topbar a { color: #ffffff; font-weight: 600; }
+.topbar .pill {
+  display: inline-flex; align-items: center; gap: .45em;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
+  color: #ffffff; border-radius: 999px; padding: .26em .85em; font-weight: 600;
+}
+.topbar a.pill:hover { background: var(--gold-500); border-color: var(--gold-500); color: var(--navy-900); text-decoration: none; }
 .nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 68px; }
 .brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; }
 .brand:hover { text-decoration: none; }
