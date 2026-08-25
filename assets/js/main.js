@@ -122,19 +122,46 @@
     }
   })();
 
-  /* ---- Site search (nav bar) ---- */
+  /* ---- Site search (icon toggle -> full-width drawer) ---- */
   (function () {
-    var wrap = document.querySelector('[data-site-search]');
+    var toggle = document.querySelector('[data-site-search-toggle]');
+    var overlay = document.querySelector('[data-site-search]');
     var input = document.querySelector('[data-site-search-input]');
     var panel = document.querySelector('[data-site-search-results]');
+    var closeBtn = document.querySelector('[data-site-search-close]');
     var dataEl = document.getElementById('site-search-data');
-    if (!wrap || !input || !panel || !dataEl) return;
+    if (!toggle || !overlay || !input || !panel || !dataEl) return;
 
     var index = [];
     try { index = JSON.parse(dataEl.textContent) || []; } catch (e) { index = []; }
 
     var activeIndex = -1;
     var currentResults = [];
+
+    function openOverlay() {
+      overlay.hidden = false;
+      toggle.setAttribute('aria-expanded', 'true');
+      setTimeout(function () { input.focus(); }, 10);
+    }
+    function closeOverlay() {
+      overlay.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+      input.value = '';
+      panel.hidden = true;
+      panel.innerHTML = '';
+    }
+    toggle.addEventListener('click', function () {
+      if (overlay.hidden) { openOverlay(); } else { closeOverlay(); }
+    });
+    if (closeBtn) closeBtn.addEventListener('click', closeOverlay);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !overlay.hidden) { closeOverlay(); toggle.focus(); }
+    });
+    document.addEventListener('click', function (e) {
+      if (!overlay.hidden && !overlay.contains(e.target) && e.target !== toggle && !toggle.contains(e.target)) {
+        closeOverlay();
+      }
+    });
 
     function score(entry, q) {
       var title = entry.title.toLowerCase();
@@ -199,17 +226,7 @@
         } else if (currentResults[0]) {
           window.location.href = currentResults[0].url;
         }
-      } else if (e.key === 'Escape') {
-        render([], '');
-        input.blur();
       }
-    });
-
-    document.addEventListener('click', function (e) {
-      if (!wrap.contains(e.target)) { panel.hidden = true; }
-    });
-    input.addEventListener('focus', function () {
-      if (input.value.trim()) { search(input.value); }
     });
   })();
 

@@ -81,16 +81,18 @@ function nav(active, prefix) {
       <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
       <ul class="nav-links" id="nav-links">${links}</ul>
       <div class="nav-cta desk">
-        <div class="nav-search" data-site-search>
-          <label class="nav-search-field">
-            <span class="nav-search-icon" aria-hidden="true">${I.search}</span>
-            <input type="search" class="nav-search-input" placeholder="Search the site…" aria-label="Search the site" autocomplete="off" data-site-search-input>
-          </label>
-          <div class="nav-search-results" data-site-search-results hidden role="listbox"></div>
-        </div>
+        <button class="search-toggle" type="button" aria-label="Search the site" aria-expanded="false" aria-controls="search-overlay" data-site-search-toggle>${I.search}</button>
         <a class="btn btn--primary" href="${prefix}schedule.html">Schedule Appointment</a>
       </div>
     </nav>
+  </div>
+  <div class="search-overlay" id="search-overlay" data-site-search hidden>
+    <div class="container search-overlay-bar">
+      <span class="search-overlay-icon" aria-hidden="true">${I.search}</span>
+      <input type="search" class="search-overlay-input" placeholder="Search articles, services, FAQs…" aria-label="Search the site" autocomplete="off" data-site-search-input>
+      <button class="search-overlay-close" type="button" aria-label="Close search" data-site-search-close>&times;</button>
+    </div>
+    <div class="search-overlay-results container" data-site-search-results hidden role="listbox"></div>
   </div>`;
 }
 

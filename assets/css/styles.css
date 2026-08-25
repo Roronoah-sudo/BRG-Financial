@@ -129,34 +129,36 @@ p { margin: 0 0 1rem; }
 .nav-toggle { display: none; background: none; border: 1.5px solid var(--line-2); border-radius: 9px; padding: 8px 10px; cursor: pointer; }
 .nav-toggle span { display: block; width: 20px; height: 2px; background: var(--navy-800); margin: 4px 0; transition: .2s; }
 
-/* ---------- Nav search ---------- */
-.nav-search { position: relative; }
-.nav-search-field {
-  display: flex; align-items: center; gap: .5em;
-  background: var(--bg-softer); border: 1.5px solid var(--line-2); border-radius: 999px;
-  padding: .5em .95em; width: 180px; transition: width .2s var(--ease), border-color .2s, background .2s;
+/* ---------- Nav search: icon toggle + full-width drawer ---------- */
+.search-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; flex: none; border-radius: 999px;
+  background: transparent; border: 1.5px solid var(--line-2); color: var(--navy-700);
+  cursor: pointer; transition: background .2s, border-color .2s, color .2s;
 }
-.nav-search-field:focus-within { width: 240px; border-color: var(--blue-500); background: #fff; }
-.nav-search-icon { display: flex; color: var(--muted); flex: none; }
-.nav-search-input {
-  border: 0; background: transparent; outline: none; font-family: var(--font-sans);
-  font-size: .92rem; color: var(--ink); width: 100%; padding: 0;
+.search-toggle:hover, .search-toggle[aria-expanded="true"] {
+  border-color: var(--blue-600); color: var(--blue-600); background: var(--bg-softer);
 }
-.nav-search-input::placeholder { color: var(--muted); }
-.nav-search-results {
-  position: absolute; top: calc(100% + 10px); right: 0; width: 340px; max-height: 400px;
-  overflow-y: auto; background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
-  box-shadow: var(--shadow-lg); padding: 8px; z-index: 70;
+.search-overlay { border-top: 1px solid var(--line); background: #fff; }
+.search-overlay-bar { display: flex; align-items: center; gap: .7em; padding: 14px 22px; }
+.search-overlay-icon { display: flex; color: var(--muted); flex: none; }
+.search-overlay-input {
+  flex: 1; border: 0; outline: none; background: transparent; font-family: var(--font-sans);
+  font-size: 1.05rem; color: var(--ink); padding: .3em 0; min-width: 0;
 }
-.nav-search-results a { display: block; padding: .6em .7em; border-radius: var(--radius-sm); text-decoration: none; }
-.nav-search-results a:hover, .nav-search-results a.active { background: var(--bg-softer); }
-.nav-search-results .r-title { display: block; font-weight: 650; color: var(--ink); font-size: .92rem; }
-.nav-search-results .r-blurb { display: block; color: var(--muted); font-size: .8rem; margin-top: 2px; line-height: 1.35; }
-.nav-search-results .r-empty { padding: .8em .7em; color: var(--muted); font-size: .88rem; }
-@media (max-width: 1180px) {
-  .nav-search-field { width: 140px; }
-  .nav-search-field:focus-within { width: 210px; }
+.search-overlay-input::placeholder { color: var(--muted); }
+.search-overlay-close {
+  border: 0; background: none; cursor: pointer; color: var(--muted); font-size: 1.5rem;
+  line-height: 1; padding: .15em .45em; border-radius: 8px; flex: none;
 }
+.search-overlay-close:hover { background: var(--bg-softer); color: var(--ink); }
+.search-overlay-results { padding-bottom: 16px; max-height: 60vh; overflow-y: auto; }
+.search-overlay-results a { display: block; padding: .7em .5em; border-radius: var(--radius-sm); text-decoration: none; border-bottom: 1px solid var(--line); }
+.search-overlay-results a:last-child { border-bottom: 0; }
+.search-overlay-results a:hover, .search-overlay-results a.active { background: var(--bg-softer); }
+.search-overlay-results .r-title { display: block; font-weight: 650; color: var(--ink); font-size: 1rem; }
+.search-overlay-results .r-blurb { display: block; color: var(--muted); font-size: .86rem; margin-top: 3px; line-height: 1.4; }
+.search-overlay-results .r-empty { padding: .8em .5em; color: var(--muted); font-size: .92rem; }
 
 @media (max-width: 960px) {
   .nav-toggle { display: block; }
