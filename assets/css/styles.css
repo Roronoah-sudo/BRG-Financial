@@ -371,8 +371,8 @@ button.pill:hover, button.pill:focus-visible { border-color: var(--blue-600); co
 /* ---------- Brand name glow ---------- */
 .brand-glow {
   font-weight: 700;
-  color: var(--gold-500);
-  text-shadow: 0 0 8px rgba(201,162,39,.55), 0 0 18px rgba(201,162,39,.32);
+  color: var(--gold-600);
+  text-shadow: 0 0 1px rgba(201,162,39,.5), 0 0 6px rgba(201,162,39,.28);
 }
 .notice { background: var(--gold-100); border:1px solid #ecd98f; border-radius: var(--radius-sm); padding: 12px 16px; font-size:.9rem; color: #6b551a; }
 .skip { position:absolute; left:-999px; top:auto; }

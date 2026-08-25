@@ -7,7 +7,7 @@ const path = require('path');
 const OUT = '/root/work/brg-site';
 // Bump this on any change to styles.css / main.js so browsers (and CDNs)
 // pick up the new file instead of serving a stale cached copy.
-const ASSET_V = '7';
+const ASSET_V = '8';
 
 const SITE = {
   name: 'BRG Financial',
