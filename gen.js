@@ -7,7 +7,7 @@ const path = require('path');
 const OUT = '/root/work/brg-site';
 // Bump this on any change to styles.css / main.js so browsers (and CDNs)
 // pick up the new file instead of serving a stale cached copy.
-const ASSET_V = '4';
+const ASSET_V = '7';
 
 const SITE = {
   name: 'BRG Financial',
@@ -253,6 +253,9 @@ function faqSchema(items) {
       "acceptedAnswer": { "@type": "Answer", "text": q.a.replace(/<[^>]+>/g, '') }
     }))
   };
+}
+function acctPill(label) {
+  return `<button type="button" class="pill" data-acct-term="${label}">${label}</button>`;
 }
 function faqBlock(items) {
   return `<div class="faq">` + items.map(q => `
@@ -650,28 +653,18 @@ pages.push({
         <h2>Accounts we support</h2>
         <p class="lead">However you hold your money — on your own, with family, through a trust, inside a business, or saving for a child — we can open and manage the right account for it.</p>
       </div>
-      <div class="acct-groups" style="margin-top:2.2rem">
+      <p class="calc-note center" style="margin-top:-.6rem;margin-bottom:1.4rem">Tap any account type below for a plain-English explanation.</p>
+      <div class="acct-groups" style="margin-top:1.2rem">
         <div class="acct-group">
           <h4>Individual, Joint &amp; Trust</h4>
           <div class="pill-row">
-            <span class="pill">Individual</span>
-            <span class="pill">Joint</span>
-            <span class="pill">Trust</span>
+            ${['Individual', 'Joint', 'Trust'].map(acctPill).join('')}
           </div>
         </div>
         <div class="acct-group">
           <h4>Retirement Accounts</h4>
           <div class="pill-row">
-            <span class="pill">Traditional IRA</span>
-            <span class="pill">Roth IRA</span>
-            <span class="pill">Rollover IRA</span>
-            <span class="pill">SEP IRA</span>
-            <span class="pill">SIMPLE IRA</span>
-            <span class="pill">Beneficiary IRA</span>
-            <span class="pill">Beneficiary Roth IRA</span>
-            <span class="pill">Solo 401(k)</span>
-            <span class="pill">Roth Solo 401(k)</span>
-            <span class="pill">Retirement Trust</span>
+            ${['Traditional IRA', 'Roth IRA', 'Rollover IRA', 'SEP IRA', 'SIMPLE IRA', 'Beneficiary IRA', 'Beneficiary Roth IRA', 'Solo 401(k)', 'Roth Solo 401(k)', 'Retirement Trust'].map(acctPill).join('')}
           </div>
         </div>
         <div class="acct-group acct-group--highlight">
@@ -679,30 +672,27 @@ pages.push({
           <h4 style="margin-top:.6rem">Accounts for minors</h4>
           <p>Starting early is one of the biggest advantages an investor can have. We open and manage custodial and retirement accounts for kids, so the next generation gets a head start on compounding.</p>
           <div class="pill-row">
-            <span class="pill">UTMA</span>
-            <span class="pill">UGMA</span>
-            <span class="pill">Minor IRA</span>
-            <span class="pill">Minor Roth IRA</span>
+            ${['UTMA', 'UGMA', 'Minor IRA', 'Minor Roth IRA'].map(acctPill).join('')}
           </div>
         </div>
         <div class="acct-group acct-group--wide">
           <h4>Business &amp; Entity Accounts</h4>
           <div class="pill-row">
-            <span class="pill">Sole Proprietorship</span>
-            <span class="pill">Single-Member LLC</span>
-            <span class="pill">C Corporation</span>
-            <span class="pill">LLC (taxed as C-Corp)</span>
-            <span class="pill">S Corporation</span>
-            <span class="pill">LLC (taxed as S-Corp)</span>
-            <span class="pill">Partnership</span>
-            <span class="pill">LLC (taxed as Partnership)</span>
-            <span class="pill">Non-Profit Organization</span>
+            ${['Sole Proprietorship', 'Single-Member LLC', 'C Corporation', 'LLC (taxed as C-Corp)', 'S Corporation', 'LLC (taxed as S-Corp)', 'Partnership', 'LLC (taxed as Partnership)', 'Non-Profit Organization'].map(acctPill).join('')}
           </div>
         </div>
       </div>
       <p class="calc-note" style="margin-top:1.6rem;text-align:center">Don’t see your exact situation? <a href="contact.html">Ask us</a> — chances are we can still help.</p>
     </div>
   </section>
+
+  <div class="acct-modal-backdrop" data-acct-modal hidden>
+    <div class="acct-modal" role="dialog" aria-modal="true" aria-labelledby="acct-modal-title">
+      <button class="acct-modal-close" type="button" aria-label="Close" data-acct-modal-close>&times;</button>
+      <h3 id="acct-modal-title" data-acct-modal-title></h3>
+      <p data-acct-modal-body></p>
+    </div>
+  </div>
 
   <section class="section">
     <div class="container measure center" style="margin-inline:auto">
