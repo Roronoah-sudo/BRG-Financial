@@ -18,7 +18,7 @@
   /* ---- Brand name glow: bold + glow every "BRG Financial" mention ---- */
   (function () {
     var RE = /BRG Financial|BRG FINANCIAL/g;
-    var SKIP = { SCRIPT: 1, STYLE: 1, TITLE: 1, TEXTAREA: 1, NOSCRIPT: 1 };
+    var SKIP = { SCRIPT: 1, STYLE: 1, TITLE: 1, TEXTAREA: 1, NOSCRIPT: 1, SUMMARY: 1 };
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
       acceptNode: function (node) {
         if (!node.nodeValue || (node.nodeValue.indexOf('BRG Financial') === -1 && node.nodeValue.indexOf('BRG FINANCIAL') === -1)) {

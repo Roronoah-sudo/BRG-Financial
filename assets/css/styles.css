@@ -125,7 +125,7 @@ p { margin: 0 0 1rem; }
 .nav-links a { color: var(--ink); font-weight: 600; font-size: .96rem; padding: .5em .7em; border-radius: 8px; }
 .nav-links a:hover { background: var(--bg-softer); text-decoration: none; color: var(--blue-600); }
 .nav-links a.active { color: var(--blue-600); }
-.nav-cta { display: flex; align-items: center; gap: .6rem; }
+.nav-actions { display: flex; align-items: center; gap: .6rem; }
 .nav-toggle { display: none; background: none; border: 1.5px solid var(--line-2); border-radius: 9px; padding: 8px 10px; cursor: pointer; }
 .nav-toggle span { display: block; width: 20px; height: 2px; background: var(--navy-800); margin: 4px 0; transition: .2s; }
 
@@ -162,13 +162,21 @@ p { margin: 0 0 1rem; }
 
 @media (max-width: 960px) {
   .nav-toggle { display: block; }
-  .nav-links, .nav-cta.desk { display: none; }
+  .nav-links { display: none; }
+  .nav-actions .desk { display: none; }
   .nav-links.open {
-    display: flex; flex-direction: column; align-items: stretch; gap: .1rem;
+    display: flex; flex-direction: column; align-items: stretch; gap: 0;
     position: absolute; left: 0; right: 0; top: 100%; background: #fff;
-    border-bottom: 1px solid var(--line); padding: 12px 22px 20px; box-shadow: var(--shadow-md);
+    border-bottom: 1px solid var(--line); padding: 6px 0 10px; box-shadow: var(--shadow-md);
+    max-height: calc(100vh - 68px); overflow-y: auto;
   }
-  .nav-links.open a { padding: .8em .4em; border-bottom: 1px solid var(--line); }
+  .nav-links.open li { border-top: 1px solid var(--line); }
+  .nav-links.open li:first-child { border-top: 0; }
+  .nav-links.open a {
+    display: block; padding: .95em 22px; border-radius: 0; font-size: 1rem;
+  }
+  .nav-links.open a:hover { background: var(--bg-softer); }
+  .nav-links.open a.active { color: var(--blue-600); background: var(--bg-softer); }
 }
 
 /* ---------- Hero ---------- */
@@ -486,8 +494,12 @@ button.pill:hover, button.pill:focus-visible { border-color: var(--blue-600); co
   .topbar .container { justify-content: center; }
   .topbar .container > .pill:first-child { display: none; }
 }
-@media (max-width: 480px) {
-  .topbar a.pill[href^="mailto"] { display: none; }
+@media (max-width: 420px) {
+  /* Not enough width for the full phone + email text side by side on the
+     smallest phones — shrink the email button to icon-only so both still
+     sit together on one row (the phone number stays fully readable). */
+  .topbar a.pill[href^="mailto"] .pill-text { display: none; }
+  .topbar a.pill[href^="mailto"] { padding: .5em; }
 }
 
 /* ---- Reduced motion ---- */
@@ -575,7 +587,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--gold-500); box-s
 .wordmark--foot small { color: #8f8a7c; }
 @media (max-width: 480px) { .wordmark { font-size: 1.12rem; letter-spacing: .12em; } }
 
-.headshot { width: 100%; max-width: 340px; border-radius: 14px; box-shadow: var(--shadow-md); border: 1px solid var(--line); }
+.headshot {
+  width: 100%; max-width: 340px; height: auto; aspect-ratio: 346 / 394; object-fit: cover;
+  border-radius: 14px; box-shadow: var(--shadow-md); border: 1px solid var(--line);
+}
 
 .callbar { display: none; }
 @media (max-width: 820px) {
