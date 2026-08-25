@@ -534,9 +534,10 @@ pages.push({
         <h2>Advice that meets you where you are</h2>
         <p class="lead">Whether you’re opening your first 401(k) or managing a windfall, the plan is built around your situation — and explained in language that makes sense.</p>
       </div>
-      <div class="grid grid-3" style="margin-top:2.2rem">
-        <a class="card card--link" href="401k-erisa.html"><div class="ic-box">${I.seed}</div><h3>401(k) &amp; ERISA</h3><p>Plan guidance for employees, and full sponsor support for business owners offering 401(k) and 403(b) plans.</p><span class="more">Explore ${I.arrow}</span></a>
+      <div class="grid grid-4" style="margin-top:2.2rem">
+        <a class="card card--link" href="401k-erisa.html"><div class="ic-box">${I.scale}</div><h3>ERISA</h3><p>Fiduciary process, prudent investment lineups, and plan documentation for business owners sponsoring a 401(k) or 403(b).</p><span class="more">Explore ${I.arrow}</span></a>
         <a class="card card--link" href="investment-management.html"><div class="ic-box">${I.chart}</div><h3>Investment Management</h3><p>Active, tactical portfolios — growth tilts, alternatives, and selective positions — built to be efficient, not generic.</p><span class="more">Explore ${I.arrow}</span></a>
+        <a class="card card--link" href="401k-erisa.html"><div class="ic-box">${I.seed}</div><h3>401(k) Plans</h3><p>Rollovers, contribution strategy, and Roth vs. traditional guidance for employees building their retirement account.</p><span class="more">Explore ${I.arrow}</span></a>
         <a class="card card--link" href="retirement-income.html"><div class="ic-box">${I.compass}</div><h3>Retirement Income</h3><p>Withdrawal strategy, Social Security timing, and tax-aware moves like Roth conversions, modeled for your future.</p><span class="more">Explore ${I.arrow}</span></a>
       </div>
     </div>
@@ -625,14 +626,15 @@ pages.push({
 pages.push({
   file: 'services.html', slug: 'services.html', active: 'services.html', prefix: '',
   title: 'Services | Investment Management, 401(k) & Retirement | BRG Financial',
-  description: 'Fee-based investment management, 401(k) & ERISA plan guidance, and retirement income strategies — headquartered in Greater Philadelphia, serving clients nationwide.',
+  description: 'Fee-based investment management, 401(k) & ERISA plan guidance, and retirement income strategies for individuals, families, businesses, trusts, and custodial accounts for minors — headquartered in Greater Philadelphia, serving clients nationwide.',
   main: `
   ${pagehead('What we do', 'Services built around your goals, not a product shelf', 'Everything here is delivered under a fiduciary standard and explained in plain language. No formal cookie-cutter package — just the work your situation actually calls for.', '', 'Services')}
   <section class="section">
     <div class="container">
-      <div class="grid grid-3">
-        <a class="card card--link" href="401k-erisa.html"><div class="ic-box">${I.seed}</div><h3>401(k) &amp; ERISA</h3><p>Guidance for employees rolling over or optimizing a 401(k), and end-to-end support for employers sponsoring 401(k) and 403(b) plans.</p><span class="more">Learn more ${I.arrow}</span></a>
+      <div class="grid grid-4">
+        <a class="card card--link" href="401k-erisa.html"><div class="ic-box">${I.shield}</div><h3>ERISA</h3><p>End-to-end support for employers sponsoring a 401(k) or 403(b) plan — fiduciary process, prudent investment lineups, and documentation.</p><span class="more">Learn more ${I.arrow}</span></a>
         <a class="card card--link" href="investment-management.html"><div class="ic-box">${I.chart}</div><h3>Investment Management</h3><p>Actively managed, tactical portfolios with growth tilts and alternatives — designed to keep returns elevated while managing risk.</p><span class="more">Learn more ${I.arrow}</span></a>
+        <a class="card card--link" href="401k-erisa.html"><div class="ic-box">${I.seed}</div><h3>401(k) Plans</h3><p>Guidance for employees rolling over or optimizing a 401(k) — contribution strategy, Roth vs. traditional, and consolidation.</p><span class="more">Learn more ${I.arrow}</span></a>
         <a class="card card--link" href="retirement-income.html"><div class="ic-box">${I.compass}</div><h3>Retirement Income</h3><p>Withdrawal sequencing, Social Security strategy, and tax-aware planning modeled through retirement.</p><span class="more">Learn more ${I.arrow}</span></a>
         <div class="card"><div class="ic-box">${I.scale}</div><h3>Tax-Aware Investing</h3><p>Roth conversions in low-income years, asset location, and coordination with your accountant to keep more of what you earn.</p></div>
         <div class="card"><div class="ic-box">${I.briefcase}</div><h3>Rollovers &amp; Consolidation</h3><p>Roll an old 401(k) into an IRA and bring scattered accounts under one clear, managed strategy.</p></div>
@@ -641,7 +643,68 @@ pages.push({
     </div>
   </section>
 
-  <section class="section section--soft">
+  <section class="section section--soft" id="accounts">
+    <div class="container">
+      <div class="center measure" style="margin-inline:auto">
+        <p class="eyebrow">Every situation, one strategy</p>
+        <h2>Accounts we support</h2>
+        <p class="lead">However you hold your money — on your own, with family, through a trust, inside a business, or saving for a child — we can open and manage the right account for it.</p>
+      </div>
+      <div class="acct-groups" style="margin-top:2.2rem">
+        <div class="acct-group">
+          <h4>Individual, Joint &amp; Trust</h4>
+          <div class="pill-row">
+            <span class="pill">Individual</span>
+            <span class="pill">Joint</span>
+            <span class="pill">Trust</span>
+          </div>
+        </div>
+        <div class="acct-group">
+          <h4>Retirement Accounts</h4>
+          <div class="pill-row">
+            <span class="pill">Traditional IRA</span>
+            <span class="pill">Roth IRA</span>
+            <span class="pill">Rollover IRA</span>
+            <span class="pill">SEP IRA</span>
+            <span class="pill">SIMPLE IRA</span>
+            <span class="pill">Beneficiary IRA</span>
+            <span class="pill">Beneficiary Roth IRA</span>
+            <span class="pill">Solo 401(k)</span>
+            <span class="pill">Roth Solo 401(k)</span>
+            <span class="pill">Retirement Trust</span>
+          </div>
+        </div>
+        <div class="acct-group acct-group--highlight">
+          <span class="badge-soft">Now featuring</span>
+          <h4 style="margin-top:.6rem">Accounts for minors</h4>
+          <p>Starting early is one of the biggest advantages an investor can have. We open and manage custodial and retirement accounts for kids, so the next generation gets a head start on compounding.</p>
+          <div class="pill-row">
+            <span class="pill">UTMA</span>
+            <span class="pill">UGMA</span>
+            <span class="pill">Minor IRA</span>
+            <span class="pill">Minor Roth IRA</span>
+          </div>
+        </div>
+        <div class="acct-group acct-group--wide">
+          <h4>Business &amp; Entity Accounts</h4>
+          <div class="pill-row">
+            <span class="pill">Sole Proprietorship</span>
+            <span class="pill">Single-Member LLC</span>
+            <span class="pill">C Corporation</span>
+            <span class="pill">LLC (taxed as C-Corp)</span>
+            <span class="pill">S Corporation</span>
+            <span class="pill">LLC (taxed as S-Corp)</span>
+            <span class="pill">Partnership</span>
+            <span class="pill">LLC (taxed as Partnership)</span>
+            <span class="pill">Non-Profit Organization</span>
+          </div>
+        </div>
+      </div>
+      <p class="calc-note" style="margin-top:1.6rem;text-align:center">Don’t see your exact situation? <a href="contact.html">Ask us</a> — chances are we can still help.</p>
+    </div>
+  </section>
+
+  <section class="section">
     <div class="container measure center" style="margin-inline:auto">
       <p class="eyebrow">A quick, important note</p>
       <h2>How we do planning</h2>
@@ -665,7 +728,8 @@ function SERVICE_FAQ() {
     { q: 'Is there a minimum to get started?', a: '<p>We work with clients at different stages, from those just beginning to invest to those managing a significant windfall. The best first step is a short call so we can point you in the right direction — even if that’s “keep doing what you’re doing for now.”</p>' },
     { q: 'Are you a fiduciary?', a: '<p>Yes — 100% of the time. As a Registered Investment Adviser we’re legally obligated to act in your best interest, and we’re happy to state that in writing.</p>' },
     { q: 'Which states can you work with clients in?', a: '<p>We’re headquartered in Greater Philadelphia and registered in Pennsylvania and New Jersey — and we’re able to work with clients nationwide. If you’re in another state, just ask and we’ll confirm the details for your state.</p>' },
-    { q: 'Do you provide a formal written financial plan?', a: '<p>Our planning is done as an integrated part of managing your money — detailed projections, tax-aware strategy, and scenario modeling specific to you — rather than sold as a separate written-plan product. You’ll always understand where you stand and what the plan is.</p>' }
+    { q: 'Do you provide a formal written financial plan?', a: '<p>Our planning is done as an integrated part of managing your money — detailed projections, tax-aware strategy, and scenario modeling specific to you — rather than sold as a separate written-plan product. You’ll always understand where you stand and what the plan is.</p>' },
+    { q: 'Do you offer accounts for children?', a: '<p>Yes — we open and manage custodial UTMA/UGMA accounts and Minor IRAs, so kids can start investing early and get the benefit of decades of compounding. A parent or guardian manages the account until the child reaches the age of majority.</p>' }
   ];
 }
 
@@ -883,7 +947,8 @@ const ALL_FAQ = [
   { q: 'Should I roll over my old 401(k)?', a: '<p>Sometimes yes, sometimes no — it depends on fees, options, taxes, and your goals. We’ll review the specifics before recommending anything. See our <a href="401k-erisa.html">401(k) &amp; ERISA services</a>.</p>' },
   { q: 'What’s the difference between Roth and traditional?', a: '<p>Traditional is generally pre-tax now and taxed at withdrawal; Roth is after-tax now and tax-free later. Which wins depends on your tax rate today versus in retirement. We break it down in <a href="blog/roth-vs-traditional.html">this article</a>.</p>' },
   { q: 'Do you offer a formal written financial plan?', a: '<p>We do the planning work — projections, tax strategy, scenario and Monte Carlo modeling — as an integrated part of managing your money, tailored to you, rather than as a separate written-plan product.</p>' },
-  { q: 'How is my money actually invested?', a: '<p>In diversified, low-cost building blocks, assembled with intent — growth tilts, alternatives, and optional individual positions — to be efficient for your risk level. More on our <a href="investment-management.html">investment approach</a>.</p>' }
+  { q: 'How is my money actually invested?', a: '<p>In diversified, low-cost building blocks, assembled with intent — growth tilts, alternatives, and optional individual positions — to be efficient for your risk level. More on our <a href="investment-management.html">investment approach</a>.</p>' },
+  { q: 'Can you open an investment account for my kids?', a: '<p>Yes — we manage custodial UTMA/UGMA accounts and Minor IRAs. It’s one of the simplest ways to give a child a real head start on compounding. See the full range of <a href="services.html#accounts">accounts we support</a>.</p>' }
 ];
 pages.push({
   file: 'faq.html', slug: 'faq.html', active: '', prefix: '',
@@ -989,10 +1054,10 @@ pages.push({
         <div class="panel">
           <h3 style="margin-top:0">Compound Growth Calculator</h3>
           <p style="color:var(--muted);font-size:.92rem">Drag the sliders to see how consistent investing can grow over time.</p>
-          <div class="field"><label>Starting amount <span class="val" id="c-start-v">$5,000</span></label><input type="range" id="c-start" min="0" max="100000" step="1000" value="5000"></div>
-          <div class="field"><label>Monthly contribution <span class="val" id="c-monthly-v">$400</span></label><input type="range" id="c-monthly" min="0" max="3000" step="50" value="400"></div>
+          <div class="field"><label>Starting amount <span class="val" id="c-start-v">$5,000</span></label><input type="range" id="c-start" min="0" max="250000" step="1000" value="5000"></div>
+          <div class="field"><label>Monthly contribution <span class="val" id="c-monthly-v">$400</span></label><input type="range" id="c-monthly" min="0" max="10000" step="50" value="400"></div>
           <div class="field"><label>Years invested <span class="val" id="c-years-v">30 yrs</span></label><input type="range" id="c-years" min="1" max="45" step="1" value="30"></div>
-          <div class="field"><label>Average annual return <span class="val" id="c-rate-v">8.0%</span></label><input type="range" id="c-rate" min="1" max="12" step="0.5" value="8"></div>
+          <div class="field"><label>Average annual return <span class="val" id="c-rate-v">8.0%</span></label><input type="range" id="c-rate" min="1" max="20" step="0.5" value="8"></div>
         </div>
         <div class="panel" style="display:flex;flex-direction:column;justify-content:center;background:var(--navy-800);color:#e6e1d3;border:none">
           <div class="calc-result">
