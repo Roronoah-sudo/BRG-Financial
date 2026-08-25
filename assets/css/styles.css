@@ -129,6 +129,35 @@ p { margin: 0 0 1rem; }
 .nav-toggle { display: none; background: none; border: 1.5px solid var(--line-2); border-radius: 9px; padding: 8px 10px; cursor: pointer; }
 .nav-toggle span { display: block; width: 20px; height: 2px; background: var(--navy-800); margin: 4px 0; transition: .2s; }
 
+/* ---------- Nav search ---------- */
+.nav-search { position: relative; }
+.nav-search-field {
+  display: flex; align-items: center; gap: .5em;
+  background: var(--bg-softer); border: 1.5px solid var(--line-2); border-radius: 999px;
+  padding: .5em .95em; width: 180px; transition: width .2s var(--ease), border-color .2s, background .2s;
+}
+.nav-search-field:focus-within { width: 240px; border-color: var(--blue-500); background: #fff; }
+.nav-search-icon { display: flex; color: var(--muted); flex: none; }
+.nav-search-input {
+  border: 0; background: transparent; outline: none; font-family: var(--font-sans);
+  font-size: .92rem; color: var(--ink); width: 100%; padding: 0;
+}
+.nav-search-input::placeholder { color: var(--muted); }
+.nav-search-results {
+  position: absolute; top: calc(100% + 10px); right: 0; width: 340px; max-height: 400px;
+  overflow-y: auto; background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-lg); padding: 8px; z-index: 70;
+}
+.nav-search-results a { display: block; padding: .6em .7em; border-radius: var(--radius-sm); text-decoration: none; }
+.nav-search-results a:hover, .nav-search-results a.active { background: var(--bg-softer); }
+.nav-search-results .r-title { display: block; font-weight: 650; color: var(--ink); font-size: .92rem; }
+.nav-search-results .r-blurb { display: block; color: var(--muted); font-size: .8rem; margin-top: 2px; line-height: 1.35; }
+.nav-search-results .r-empty { padding: .8em .7em; color: var(--muted); font-size: .88rem; }
+@media (max-width: 1180px) {
+  .nav-search-field { width: 140px; }
+  .nav-search-field:focus-within { width: 210px; }
+}
+
 @media (max-width: 960px) {
   .nav-toggle { display: block; }
   .nav-links, .nav-cta.desk { display: none; }

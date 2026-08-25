@@ -14,6 +14,7 @@ const SITE = {
   tel: '+14843682477',
   email: 'info@brgfinancial.net',
   area: 'Greater Philadelphia · PA & NJ',
+  areaShort: 'Greater Philadelphia',   // used only in the header pill; full area string still used in footer/meta/JSON-LD
   reach: 'Serving clients nationwide',
   advisor: 'Benjamin R. Gialloreto, CFA',
   advisorShort: 'Ben',
@@ -43,7 +44,8 @@ const I = {
   linkedin: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.4c0-1.29-.02-2.95-1.8-2.95-1.8 0-2.07 1.4-2.07 2.85V21H9z"/></svg>',
   facebook: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>',
   x: '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.6 8.7L23 22h-6.8l-5-6.6L5.3 22H2l8.1-9.3L1.5 2h6.9l4.5 6 5.2-6zm-2.4 18h1.9L7.6 4H5.6z"/></svg>',
-  link: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>'
+  link: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>',
+  search: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>'
 };
 
 const LOGO = `<svg class="mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="48" height="48" rx="11" fill="#101012"/><path d="M13 34V14h9.2c3.9 0 6.3 1.9 6.3 5.1 0 2.2-1.2 3.7-3.2 4.4 2.5.5 4 2.2 4 4.8 0 3.5-2.6 5.7-6.8 5.7H13z" fill="#fff"/><path d="M17.7 22.2h3.7c1.7 0 2.7-.8 2.7-2.2 0-1.4-1-2.1-2.7-2.1h-3.7v4.3zm0 8.1h4c1.9 0 2.9-.8 2.9-2.4 0-1.5-1.1-2.4-3-2.4h-3.9v4.8z" fill="#101012"/><path d="M31 34l4.8-10L31 14h4.3l2.7 6.4 2.7-6.4H45l-4.8 10L45 34h-4.4l-2.8-6.6L35 34h-4z" fill="#c9a227"/></svg>`;
@@ -64,7 +66,7 @@ function nav(active, prefix) {
   return `
   <div class="topbar">
     <div class="container">
-      <span class="pill">${I.pin} ${SITE.area}</span>
+      <span class="pill">${I.pin} ${SITE.areaShort}</span>
       <span style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
         <a class="pill" href="tel:${SITE.tel}">${I.phone} ${SITE.phone}</a>
         <a class="pill" href="mailto:${SITE.email}">${I.mail} ${SITE.email}</a>
@@ -79,7 +81,13 @@ function nav(active, prefix) {
       <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
       <ul class="nav-links" id="nav-links">${links}</ul>
       <div class="nav-cta desk">
-        <a class="btn btn--ghost" href="tel:${SITE.tel}">${I.phone} Call</a>
+        <div class="nav-search" data-site-search>
+          <label class="nav-search-field">
+            <span class="nav-search-icon" aria-hidden="true">${I.search}</span>
+            <input type="search" class="nav-search-input" placeholder="Search the site…" aria-label="Search the site" autocomplete="off" data-site-search-input>
+          </label>
+          <div class="nav-search-results" data-site-search-results hidden role="listbox"></div>
+        </div>
         <a class="btn btn--primary" href="${prefix}schedule.html">Schedule Appointment</a>
       </div>
     </nav>
@@ -196,6 +204,7 @@ ${o.main}
     <a class="btn btn--navy" href="${prefix}schedule.html">${I.clock} Schedule</a>
   </div>
   ${footer(prefix)}
+  <script id="site-search-data" type="application/json">${JSON.stringify(SEARCH_INDEX)}</script>
   <script src="${prefix}assets/js/main.js" defer></script>
   ${o.scripts || ''}
 </body>
@@ -1260,6 +1269,27 @@ pages.push({
     </div>
   </section>`
 });
+
+/* ============================================================
+   SITE SEARCH INDEX
+   Built from the generated pages + blog post tags so the nav
+   search bar can look up topics across the whole site client-side.
+   ============================================================ */
+const SEARCH_EXCLUDE = /^(thank-you|dashboard|disclosures|404)\.html$/;
+const SEARCH_INDEX = pages
+  .filter(pg => !SEARCH_EXCLUDE.test(pg.file))
+  .map(pg => {
+    const post = POSTS.find(p => pg.file === 'blog/' + p.slug + '.html');
+    const title = pg.file === 'index.html'
+      ? 'Home — BRG Financial'
+      : pg.title.replace(/\s*\|\s*BRG Financial.*$/, '');
+    return {
+      title: title,
+      url: '/' + (pg.slug || 'index.html'),
+      blurb: pg.description,
+      keywords: post ? post.tags.join(' ') : ''
+    };
+  });
 
 /* ============================================================
    WRITE FILES

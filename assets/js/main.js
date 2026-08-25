@@ -122,6 +122,97 @@
     }
   })();
 
+  /* ---- Site search (nav bar) ---- */
+  (function () {
+    var wrap = document.querySelector('[data-site-search]');
+    var input = document.querySelector('[data-site-search-input]');
+    var panel = document.querySelector('[data-site-search-results]');
+    var dataEl = document.getElementById('site-search-data');
+    if (!wrap || !input || !panel || !dataEl) return;
+
+    var index = [];
+    try { index = JSON.parse(dataEl.textContent) || []; } catch (e) { index = []; }
+
+    var activeIndex = -1;
+    var currentResults = [];
+
+    function score(entry, q) {
+      var title = entry.title.toLowerCase();
+      var blurb = (entry.blurb || '').toLowerCase();
+      var kw = (entry.keywords || '').toLowerCase();
+      if (title.indexOf(q) === 0) return 3;
+      if (title.indexOf(q) > -1) return 2;
+      if (kw.indexOf(q) > -1) return 1.5;
+      if (blurb.indexOf(q) > -1) return 1;
+      return 0;
+    }
+
+    function render(results, query) {
+      currentResults = results;
+      activeIndex = -1;
+      if (!query) { panel.hidden = true; panel.innerHTML = ''; return; }
+      if (!results.length) {
+        panel.innerHTML = '<div class="r-empty">No matches for “' + query + '”. Try “401(k)”, “Roth”, or “fees”.</div>';
+        panel.hidden = false;
+        return;
+      }
+      panel.innerHTML = results.map(function (r) {
+        return '<a href="' + r.url + '" role="option"><span class="r-title">' + r.title + '</span><span class="r-blurb">' + r.blurb + '</span></a>';
+      }).join('');
+      panel.hidden = false;
+    }
+
+    function search(query) {
+      var q = query.trim().toLowerCase();
+      if (!q) { render([], ''); return; }
+      var results = index
+        .map(function (entry) { return { entry: entry, s: score(entry, q) }; })
+        .filter(function (r) { return r.s > 0; })
+        .sort(function (a, b) { return b.s - a.s; })
+        .slice(0, 6)
+        .map(function (r) { return r.entry; });
+      render(results, query);
+    }
+
+    var debounceTimer;
+    input.addEventListener('input', function () {
+      clearTimeout(debounceTimer);
+      var val = input.value;
+      debounceTimer = setTimeout(function () { search(val); }, 120);
+    });
+
+    input.addEventListener('keydown', function (e) {
+      var links = panel.querySelectorAll('a');
+      if (e.key === 'ArrowDown') {
+        if (!links.length) return;
+        e.preventDefault();
+        activeIndex = Math.min(activeIndex + 1, links.length - 1);
+        links.forEach(function (a, i) { a.classList.toggle('active', i === activeIndex); });
+      } else if (e.key === 'ArrowUp') {
+        if (!links.length) return;
+        e.preventDefault();
+        activeIndex = Math.max(activeIndex - 1, 0);
+        links.forEach(function (a, i) { a.classList.toggle('active', i === activeIndex); });
+      } else if (e.key === 'Enter') {
+        if (activeIndex > -1 && currentResults[activeIndex]) {
+          window.location.href = currentResults[activeIndex].url;
+        } else if (currentResults[0]) {
+          window.location.href = currentResults[0].url;
+        }
+      } else if (e.key === 'Escape') {
+        render([], '');
+        input.blur();
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!wrap.contains(e.target)) { panel.hidden = true; }
+    });
+    input.addEventListener('focus', function () {
+      if (input.value.trim()) { search(input.value); }
+    });
+  })();
+
   /* ---- Lead magnet capture (demo) ---- */
   document.querySelectorAll('form[data-lead]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
