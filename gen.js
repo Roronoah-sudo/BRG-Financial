@@ -5,6 +5,9 @@
 const fs = require('fs');
 const path = require('path');
 const OUT = '/root/work/brg-site';
+// Bump this on any change to styles.css / main.js so browsers (and CDNs)
+// pick up the new file instead of serving a stale cached copy.
+const ASSET_V = '4';
 
 const SITE = {
   name: 'BRG Financial',
@@ -188,7 +191,7 @@ function layout(o) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="${prefix}assets/css/styles.css">
+  <link rel="stylesheet" href="${prefix}assets/css/styles.css?v=${ASSET_V}">
   ${ldScript}
   <link rel="alternate" type="application/rss+xml" title="BRG Financial Insights" href="${SITE.url}/feed.xml">
   ${SITE.ga4 ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${SITE.ga4}"></script>
@@ -207,7 +210,7 @@ ${o.main}
   </div>
   ${footer(prefix)}
   <script id="site-search-data" type="application/json">${JSON.stringify(SEARCH_INDEX)}</script>
-  <script src="${prefix}assets/js/main.js" defer></script>
+  <script src="${prefix}assets/js/main.js?v=${ASSET_V}" defer></script>
   ${o.scripts || ''}
 </body>
 </html>`;
