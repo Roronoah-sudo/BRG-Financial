@@ -4,14 +4,14 @@
    ============================================================ */
 const fs = require('fs');
 const path = require('path');
-const OUT = '/root/work/brg-site';
+const OUT = process.env.BRG_OUT || __dirname;   // regenerates in place, at the repo root
 // Bump this on any change to styles.css / main.js so browsers (and CDNs)
 // pick up the new file instead of serving a stale cached copy.
 const ASSET_V = '8';
 
 const SITE = {
   name: 'BRG Financial',
-  legal: 'BRG Financial LLC',
+  legal: 'BRG Financial, LLC',
   url: 'https://brgfinancial.net',
   phone: '484-368-2477',
   tel: '+14843682477',
@@ -19,7 +19,7 @@ const SITE = {
   area: 'Greater Philadelphia · PA & NJ',
   areaShort: 'Greater Philadelphia',   // used only in the header pill; full area string still used in footer/meta/JSON-LD
   reach: 'Serving clients nationwide',
-  advisor: 'Benjamin R. Gialloreto, CFA',
+  advisor: 'Benjamin R Gialloreto, CFA',
   advisorShort: 'Ben',
   advisorRole: 'Founder & Principal · CFA Charterholder',
   booking: '',        // paste a Calendly/booking URL here to activate the scheduler embed on schedule.html
@@ -79,7 +79,7 @@ function nav(active, prefix) {
   <div class="container">
     <nav class="nav" aria-label="Primary">
       <a class="brand" href="${prefix}index.html" aria-label="${SITE.name} home">
-        <span class="wordmark">BRG FINANCIAL<small>Registered Investment Adviser</small></span>
+        <span class="brand-logo"><img src="${prefix}assets/img/brg-logo-ink.png" alt="BRG Financial" width="240" height="35"><small>Registered Investment Adviser</small></span>
       </a>
       <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
       <ul class="nav-links" id="nav-links">${links}</ul>
@@ -114,7 +114,8 @@ function footer(prefix) {
           <ul class="foot-links">
             <li><a href="${prefix}services.html">Overview</a></li>
             <li><a href="${prefix}401k-erisa.html">401(k) &amp; ERISA</a></li>
-            <li><a href="${prefix}investment-management.html">Investment Management</a></li>
+            <li><a href="${prefix}investment-management.html">Asset Management</a></li>
+            <li><a href="${prefix}retirement-planning.html">Retirement Planning</a></li>
             <li><a href="${prefix}retirement-income.html">Retirement Income</a></li>
           </ul>
         </div>
@@ -123,7 +124,7 @@ function footer(prefix) {
           <ul class="foot-links">
             <li><a href="${prefix}insights.html">Insights &amp; Articles</a></li>
             <li><a href="${prefix}faq.html">FAQ</a></li>
-            <li><a href="${prefix}get-started.html">Free Investor Guide</a></li>
+            <li><a href="${prefix}get-started.html">Investor Guide</a></li>
             <li><a href="${prefix}about.html">About Ben</a></li>
           </ul>
         </div>
@@ -196,6 +197,17 @@ function layout(o) {
   <link rel="alternate" type="application/rss+xml" title="BRG Financial Insights" href="${SITE.url}/feed.xml">
   ${SITE.ga4 ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${SITE.ga4}"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${SITE.ga4}');</script>` : '<!-- Google Analytics: set SITE.ga4 in gen.js and regenerate to activate -->'}
+  <style>
+  /* Brand lockup — move into assets/css/styles.css when convenient */
+  .brand-logo{display:inline-block;line-height:0}
+  .brand-logo img{display:block;width:240px;height:auto}
+  .brand-logo small{display:block;margin-top:5px;font-size:9.5px;line-height:1;
+    letter-spacing:.18em;text-transform:uppercase;color:#8a7a3e;font-weight:700;white-space:nowrap}
+  @media (max-width:640px){
+    .brand-logo img{width:186px}
+    .brand-logo small{font-size:8px;letter-spacing:.15em}
+  }
+  </style>
   ${o.head || ''}
 </head>
 <body${o.bodyClass ? ` class="${o.bodyClass}"` : ''}>
@@ -233,9 +245,9 @@ function ctaBand(prefix) {
   return `
   <section class="section section--navy">
     <div class="container center measure" style="margin-inline:auto">
-      <p class="eyebrow">Let's talk</p>
-      <h2 style="color:#fff">A 20-minute intro call, no pressure and no cost</h2>
-      <p style="color:#d8d4c6">See whether we're a fit, get a straight answer about your situation, and leave with something useful either way.</p>
+      <p class="eyebrow">Let's Talk</p>
+      <h2 style="color:#fff">20 Minute Intro Call. No Pressure. No Cost.</h2>
+      <p style="color:#d8d4c6">BRG is happy to answer any questions about your financial situation. Our fiduciary duty is to put client's interest above our own.</p>
       <div class="hero-cta" style="justify-content:center;margin-top:1.2rem">
         <a class="btn btn--primary btn--lg" href="${prefix}schedule.html">Schedule an appointment ${I.arrow}</a>
         <a class="btn btn--light btn--lg" href="tel:${SITE.tel}">${I.phone} ${SITE.phone}</a>
@@ -269,7 +281,7 @@ function faqBlock(items) {
    BLOG DATA  (Option C: automation-ready — posts are data objects
    that a monthly job/AI pipeline appends to. Rendering is templated.)
    ============================================================ */
-const POSTS = [
+let POSTS = [
   {
     slug: 'start-investing-in-your-20s',
     cat: 'Getting Started',
@@ -439,6 +451,13 @@ const POSTS = [
   }
 ];
 
+/* Posts flagged published:false stay written here but are pulled from the
+   insights index, the home page, the RSS feed, the sitemap and site search.
+   Flip the flag back to publish one. */
+const ALL_POSTS = POSTS;
+const PARKED = new Set(['how-much-does-a-financial-advisor-cost', 'common-401k-rollover-mistakes', 'how-much-emergency-fund']);
+POSTS = ALL_POSTS.filter(p => !PARKED.has(p.slug));
+
 function postCard(p, prefix) {
   return `
     <a class="card card--link post-card" href="${prefix}blog/${p.slug}.html">
@@ -466,16 +485,17 @@ pages.push({
       <div class="hero-grid">
         <div>
           <p class="eyebrow" style="color:#e6c766">Fiduciary · Fee-based · Greater Philadelphia</p>
-          <h1>Grow your money with an adviser who <span class="grad-text">actually explains it.</span></h1>
-          <p class="lead">BRG Financial is a fiduciary Registered Investment Adviser headquartered in Greater Philadelphia — helping individuals, families, and business owners nationwide invest with a real strategy, not a cookie-cutter script.</p>
+          <h1>Know where you stand. <span class="grad-text">Know where you're going.</span></h1>
+          <p class="lead">BRG Financial, LLC offers disciplined investment management for investors who want a thoughtful strategy, a trusted relationship, and a clear understanding of how their portfolio is positioned.</p>
           <div class="hero-badges">
             <span class="chip">${I.shield} Fiduciary, 100% of the time</span>
-            <span class="chip">${I.seed} 401(k) &amp; ERISA specialist</span>
-            <span class="chip">${I.chart} Active, tactical management</span>
+            <span class="chip">${I.layers} Strategic risk management</span>
+            <span class="chip">${I.chart} Customized portfolio solutions</span>
+            <span class="chip">${I.seed} 401(k) &amp; ERISA Specialist</span>
           </div>
           <div class="hero-cta">
             <a class="btn btn--primary btn--lg" href="schedule.html">Schedule an appointment ${I.arrow}</a>
-            <a class="btn btn--light btn--lg" href="get-started.html">Get the free investor guide</a>
+            <a class="btn btn--light btn--lg" href="get-started.html">Get the complimentary investor guide</a>
           </div>
         </div>
         <div class="hero-card glass">
@@ -517,31 +537,31 @@ pages.push({
 
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track">
-      ${(() => { const items = ['401(k) &amp; ERISA Plans','Investment Management','Retirement Income','Roth Conversions','Fiduciary Advice','Tax-Aware Strategy','Greater Philadelphia HQ · Serving Clients Nationwide']; const row = items.map(t => `<span><i class="dia">✦</i>${t}</span>`).join(''); return row + row; })()}
+      ${(() => { const items = ['401(k) &amp; ERISA Plans','Investment Management','Retirement Planning','Withdrawal Strategies','Fiduciary Advice','Tax-Aware Strategies','Greater Philadelphia HQ · Serving Clients Nationwide']; const row = items.map(t => `<span><i class="dia">✦</i>${t}</span>`).join(''); return row + row; })()}
     </div>
   </div>
 
   <section class="trust">
     <div class="container">
-      <div class="item">${I.shield}<div class="ic" style="display:none"></div><div><strong>Fiduciary duty</strong><span>Legally required to act in your interest</span></div></div>
+      <div class="item">${I.shield}<div class="ic" style="display:none"></div><div><strong>Fiduciary Duty</strong><span>Legally required to act in your interest</span></div></div>
       <div class="item">${I.pin}<div><strong>Greater Philadelphia HQ</strong><span>Serving clients nationwide</span></div></div>
       <div class="item">${I.scale}<div><strong>Transparent, fee-based</strong><span>No hidden commissions</span></div></div>
-      <div class="item">${I.spark}<div><strong>Real strategy</strong><span>Not an off-the-shelf model</span></div></div>
+      <div class="item">${I.spark}<div><strong>Personalized Strategies</strong><span>Tailored to your specific needs</span></div></div>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
       <div class="center measure" style="margin-inline:auto">
-        <p class="eyebrow">How we help</p>
-        <h2>Advice that meets you where you are</h2>
-        <p class="lead">Whether you’re opening your first 401(k) or managing a windfall, the plan is built around your situation — and explained in language that makes sense.</p>
+        <p class="eyebrow">How BRG can help</p>
+        <h2>Customized Investment Solutions</h2>
+        <p class="lead">Whether you are starting to invest for retirement or inheriting a lump sum, BRG’s investment strategies are tailored to your specific needs.</p>
       </div>
       <div class="grid grid-4" style="margin-top:2.2rem">
-        <a class="card card--link" href="401k-erisa.html"><div class="ic-box">${I.scale}</div><h3>ERISA</h3><p>Fiduciary process, prudent investment lineups, and plan documentation for business owners sponsoring a 401(k) or 403(b).</p><span class="more">Explore ${I.arrow}</span></a>
-        <a class="card card--link" href="investment-management.html"><div class="ic-box">${I.chart}</div><h3>Investment Management</h3><p>Active, tactical portfolios — growth tilts, alternatives, and selective positions — built to be efficient, not generic.</p><span class="more">Explore ${I.arrow}</span></a>
-        <a class="card card--link" href="401k-erisa.html"><div class="ic-box">${I.seed}</div><h3>401(k) Plans</h3><p>Rollovers, contribution strategy, and Roth vs. traditional guidance for employees building their retirement account.</p><span class="more">Explore ${I.arrow}</span></a>
+        <a class="card card--link" href="investment-management.html"><div class="ic-box">${I.chart}</div><h3>Asset Management</h3><p>Portfolio construction designed to be efficient — emphasis on seeking the highest level of returns for a given level of risk. Active, tactical trades mixed into a low cost, strategic foundation.</p><span class="more">Explore ${I.arrow}</span></a>
+        <a class="card card--link" href="retirement-planning.html"><div class="ic-box">${I.seed}</div><h3>Retirement Planning</h3><p>Rollovers, contribution strategy, and Roth vs. traditional guidance for individuals building their retirement account.</p><span class="more">Explore ${I.arrow}</span></a>
         <a class="card card--link" href="retirement-income.html"><div class="ic-box">${I.compass}</div><h3>Retirement Income</h3><p>Withdrawal strategy, Social Security timing, and tax-aware moves like Roth conversions, modeled for your future.</p><span class="more">Explore ${I.arrow}</span></a>
+        <a class="card card--link" href="401k-erisa.html"><div class="ic-box">${I.scale}</div><h3>401(k) Plans</h3><p>Fiduciary process, low cost investment lineups, and plan due diligence for business owners sponsoring a 401(k).</p><span class="more">Explore ${I.arrow}</span></a>
       </div>
     </div>
   </section>
@@ -591,9 +611,9 @@ pages.push({
       <div class="leadmag" data-lead-wrap>
         <div class="split" style="align-items:center">
           <div>
-            <span class="badge-soft">Free download</span>
-            <h2 style="margin-top:.6rem">The 10-Minute Investor Starter Guide</h2>
-            <p style="color:#c8d7ec">The 5 things that actually matter when you’re getting started — and the myths that keep people on the sidelines. No jargon, no sales pitch.</p>
+            <span class="badge-soft">Complimentary download</span>
+            <h2 style="margin-top:.6rem">The BRG Financial Investment Starter Guide</h2>
+            <p style="color:#c8d7ec">The five moves that actually matter when you’re getting started — and the myths that keep people on the sidelines. No jargon, no sales pitch.</p>
             <div data-lead-done hidden><p class="notice" style="background:#e7f4ee;border-color:#bfe3cf;color:#245c42">✓ Check your inbox — your guide is on the way. Talk soon!</p></div>
             <form data-lead id="home-lead" action="${SITE.formEndpoint || '#'}" method="POST" data-lead-wrap>
               <div class="form-row">
@@ -606,9 +626,9 @@ pages.push({
           <div class="media">
             <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:22px">
               <ul class="checklist" style="margin:0">
-                <li style="color:#f1ede0">Start with the match — free money first</li>
+                <li style="color:#f1ede0">Take the free money first — capture your full match</li>
                 <li style="color:#f1ede0">Automate so the decision is made once</li>
-                <li style="color:#f1ede0">Roth vs. traditional, decoded</li>
+                <li style="color:#f1ede0">Roth vs. Traditional, decoded</li>
                 <li style="color:#f1ede0">What you can safely ignore</li>
               </ul>
             </div>
@@ -631,7 +651,7 @@ pages.push({
   title: 'Services | Investment Management, 401(k) & Retirement | BRG Financial',
   description: 'Fee-based investment management, 401(k) & ERISA plan guidance, and retirement income strategies for individuals, families, businesses, trusts, and custodial accounts for minors — headquartered in Greater Philadelphia, serving clients nationwide.',
   main: `
-  ${pagehead('What we do', 'Services built around your goals, not a product shelf', 'Everything here is delivered under a fiduciary standard and explained in plain language. No formal cookie-cutter package — just the work your situation actually calls for.', '', 'Services')}
+  ${pagehead('What we do', 'Asset Management services built around your goals', 'BRG provides fee based asset management services for clients. We do not sell commission related products and act as a fiduciary — ensuring we are always putting client interests above our own.', '', 'Services')}
   <section class="section">
     <div class="container">
       <div class="grid grid-4">
@@ -698,7 +718,7 @@ pages.push({
     <div class="container measure center" style="margin-inline:auto">
       <p class="eyebrow">A quick, important note</p>
       <h2>How we do planning</h2>
-      <p class="lead">We do the planning work — budgets, projections, withdrawal and Social Security strategy, Monte Carlo modeling, solvency to age 100 — as part of managing your money. It’s hands-on and specific to you, and it’s built to answer the questions that matter: are you on track, and what needs to change?</p>
+      <p class="lead">We guide you through the planning process — budgeting, projections, retirement withdrawal strategies, Monte Carlo modeling — as part of our asset management service. It’s hands on and designed to answer important questions such as are you on track and what adjustments need to be made.</p>
     </div>
   </section>
 
@@ -717,8 +737,8 @@ function SERVICE_FAQ() {
     { q: 'How much does working with BRG Financial cost?', a: '<p>We’re fee-based and transparent. Investment management is typically billed as a percentage of the assets we manage for you, and we’ll always put our fiduciary commitment in writing. There are no hidden commissions. On an intro call we’ll walk through exactly what you’d pay and what’s included.</p>' },
     { q: 'Is there a minimum to get started?', a: '<p>We work with clients at different stages, from those just beginning to invest to those managing a significant windfall. The best first step is a short call so we can point you in the right direction — even if that’s “keep doing what you’re doing for now.”</p>' },
     { q: 'Are you a fiduciary?', a: '<p>Yes — 100% of the time. As a Registered Investment Adviser we’re legally obligated to act in your best interest, and we’re happy to state that in writing.</p>' },
-    { q: 'Which states can you work with clients in?', a: '<p>We’re headquartered in Greater Philadelphia and registered in Pennsylvania and New Jersey — and we’re able to work with clients nationwide. If you’re in another state, just ask and we’ll confirm the details for your state.</p>' },
-    { q: 'Do you provide a formal written financial plan?', a: '<p>Our planning is done as an integrated part of managing your money — detailed projections, tax-aware strategy, and scenario modeling specific to you — rather than sold as a separate written-plan product. You’ll always understand where you stand and what the plan is.</p>' },
+    { q: 'Which states can you work with clients in?', a: '<p>We’re headquartered in Greater Philadelphia and are able to work and serve clients nationwide.</p>' },
+    { q: 'How do you incorporate planning into your investment services?', a: '<p>Our planning is done as an integrated part of managing your money — detailed projections, tax-aware strategies, and scenario modeling specific to you — rather than sold as a separate written-plan product.</p>' },
     { q: 'Do you offer accounts for children?', a: '<p>Yes — we open and manage custodial UTMA/UGMA accounts and Minor IRAs, so kids can start investing early and get the benefit of decades of compounding. A parent or guardian manages the account until the child reaches the age of majority.</p>' }
   ];
 }
@@ -726,21 +746,21 @@ function SERVICE_FAQ() {
 /* ---------- 401k / ERISA (niche SEO page) ---------- */
 pages.push({
   file: '401k-erisa.html', slug: '401k-erisa.html', active: '401k-erisa.html', prefix: '',
-  title: '401(k), 403(b) & ERISA Plan Services | BRG Financial (PA & NJ)',
-  description: 'ERISA 401(k) and 403(b) plan guidance for employees and employers — Greater Philadelphia HQ, serving clients nationwide. Rollovers, plan design, fiduciary support, and low-cost investment lineups.',
+  title: '401(k) Plan Services & ERISA Support | BRG Financial (PA & NJ)',
+  description: 'ERISA 401(k) guidance for individuals and employers — Greater Philadelphia HQ, serving clients nationwide. Rollovers, plan design, 3(21) and 3(38) fiduciary support, and low cost investment lineups.',
   main: `
-  ${pagehead('Our specialty', '401(k), 403(b) &amp; ERISA plan services', 'A less crowded, deeply important corner of financial services — and one we know well. Whether you’re an employee with an old 401(k) or a business owner sponsoring a plan, here’s how we help.', '', '401(k) &amp; ERISA')}
+  ${pagehead('For Plans &amp; Participants', '401(k) Plan Services', 'A less crowded, deeply important corner of financial services — and one we know well. Whether you’re an employee with an old 401(k) or a business owner sponsoring a plan, here’s how we help.', '', '401(k) &amp; ERISA')}
 
   <section class="section">
     <div class="container split">
       <div>
-        <h2>For individuals &amp; employees</h2>
+        <h2>For Individuals &amp; Employees</h2>
         <p>Job changes leave a trail of old retirement accounts. We help you make sense of them and put them to work.</p>
         <ul class="checklist">
           <li><strong>401(k) rollovers</strong> into an IRA we manage — consolidating old accounts into one clear strategy.</li>
-          <li><strong>Contribution strategy:</strong> capturing your full employer match and choosing Roth vs. traditional deliberately.</li>
-          <li><strong>Investment selection</strong> inside your current plan’s menu, if a rollover isn’t right yet.</li>
-          <li><strong>Coordination</strong> of your 401(k) with your broader retirement picture.</li>
+          <li><strong>Contribution strategy:</strong> choosing between Roth vs. Traditional and modeling out future potential earnings.</li>
+          <li><strong>Coordination</strong> of your 401(k) or IRAs with your broader retirement picture.</li>
+          <li><strong>Fiduciary oversight</strong> of your retirement accounts — always keeping your interest first.</li>
         </ul>
         <a class="btn btn--navy" href="contact.html">Talk about your 401(k) ${I.arrow}</a>
       </div>
@@ -760,25 +780,17 @@ pages.push({
   </section>
 
   <section class="section section--soft">
-    <div class="container split split--reverse">
+    <div class="container">
       <div>
-        <h2>For employers &amp; plan sponsors</h2>
-        <p>Offering a retirement plan helps you attract talent and can reduce the business’s tax bill — but sponsoring one makes you an <strong>ERISA fiduciary</strong>. We help you meet that duty with a documented, prudent process.</p>
+        <h2>For Employers &amp; Plan Sponsors</h2>
+        <p>Offering a retirement plan can help attract talent while providing tax benefits for your business. BRG can serve as a <strong>3(21) or 3(38) fiduciary investment advisor</strong>, helping take the burden of investment selection, monitoring, and oversight off your shoulders.</p>
         <ul class="checklist">
           <li><strong>Plan design</strong> — match structure, eligibility, and vesting tuned to your goals.</li>
           <li><strong>Prudent investment lineup</strong> that’s diversified and low-cost.</li>
-          <li><strong>Fiduciary documentation</strong> so your process is defensible.</li>
-          <li><strong>Employee education</strong> so your team actually uses the benefit.</li>
-          <li><strong>403(b) plans</strong> for nonprofit and educational employers.</li>
+          <li><strong>Due diligence</strong> — systematic review of the investment lineup, including performance, fees, and suitability.</li>
+          <li><strong>Employee education</strong> so your team understands how their investments work for them.</li>
         </ul>
         <a class="btn btn--navy" href="contact.html">Explore a plan for your business ${I.arrow}</a>
-      </div>
-      <div class="media">
-        <div class="card" style="background:var(--navy-800);color:#e6e1d3;border:none">
-          <p class="eyebrow" style="color:var(--gold-500)">Why it matters</p>
-          <h3 style="color:#fff">The fiduciary duty is real</h3>
-          <p style="color:#d8d4c6">Under ERISA, running a plan “well enough” isn’t the standard — acting in participants’ best interest with a documented process is. We make that manageable instead of intimidating.</p>
-        </div>
       </div>
     </div>
   </section>
@@ -798,40 +810,40 @@ pages.push({
 
 function K401_FAQ() {
   return [
-    { q: 'Should I roll over my old 401(k) into an IRA?', a: '<p>It depends on the fees and investment options in your old plan versus an IRA, the tax implications, and your goals. Often consolidating into a managed IRA gives you more control and a clearer strategy — but not always. We’ll look at the specifics with you before recommending anything.</p>' },
-    { q: 'What is an ERISA fiduciary, and am I one?', a: '<p>If you sponsor a retirement plan for your business, you generally take on a fiduciary duty under ERISA to run the plan in participants’ best interest — prudent investments, reasonable fees, and a documented process. We help you meet that responsibility.</p>' },
-    { q: 'How much does it cost a small business to offer a 401(k)?', a: '<p>Costs have come down significantly, and tax credits may offset start-up expenses for new plans. Employer contributions are generally tax-deductible. We’ll help you weigh the real numbers against the benefits for your business and your own retirement savings.</p>' },
-    { q: 'What’s the difference between a 401(k) and a 403(b)?', a: '<p>They’re similar tax-advantaged retirement plans, but 403(b) plans are for nonprofit and educational employers and have their own rules. The core principles — prudent options, reasonable costs, documented process — are the same.</p>' }
+    { q: 'What happens to my 401(k) if I leave my employer?', a: '<p>You generally have four options: cash out the account, leave it in your former employer’s plan, move it to a new employer’s plan, or roll it into an IRA. Each option has different investment, tax, fee, and planning considerations. Rollovers are a core part of what we do, and we’re happy to help you evaluate whether an IRA is the right fit. We believe keeping retirement assets invested for their intended purpose is preferable to cashing them out prematurely.</p>' },
+    { q: 'Should I roll my 401(k) into an IRA?', a: '<p>It depends on the fees and investment options in your old plan, the benefits and limitations of an IRA, any tax considerations, and your broader financial goals. In some cases, consolidating into a managed IRA can provide greater investment flexibility and a more coordinated strategy.</p>' },
+    { q: 'What is an ERISA fiduciary, and am I one?', a: '<p>If you sponsor a retirement plan, you may have fiduciary responsibilities under ERISA. Those responsibilities may include acting in participants’ best interests, following a prudent process, selecting and monitoring investments, and ensuring plan fees are reasonable. BRG can help you meet these responsibilities on the investment side of the plan.</p>' },
+    { q: 'How much does it cost a small business to offer a 401(k)?', a: '<p>Costs vary based on the size and design of the plan, but tax credits may offset some of the costs of starting a new 401(k). Employer contributions are generally tax-deductible, subject to applicable limits. We’ll help you evaluate the costs, tax benefits, and potential value to both your business and your own retirement savings.</p>' }
   ];
 }
 
 /* ---------- INVESTMENT MANAGEMENT ---------- */
 pages.push({
   file: 'investment-management.html', slug: 'investment-management.html', active: '', prefix: '',
-  title: 'Investment Management | Active, Tactical Portfolios | BRG Financial',
-  description: 'Actively managed, tactical investment portfolios with growth tilts and alternatives — built to be efficient. Fiduciary, fee-based, headquartered in Greater Philadelphia — clients nationwide.',
+  title: 'Asset Management & Investment Philosophy | BRG Financial',
+  description: 'BRG Financial’s investment philosophy — style tilted equities, alternatives, and tactical positioning built on a low cost foundation, with risk measured security by security. Fiduciary and fee-based, Greater Philadelphia HQ, clients nationwide.',
   main: `
-  ${pagehead('How we invest', 'Active, tactical, and built to be efficient', 'We use low-cost building blocks — but how we assemble them is where the strategy lives. Here’s the philosophy in plain terms.', '', 'Investment Management')}
+  ${pagehead('Built to be efficient', 'Investment Philosophy', 'We use low cost building blocks, but how we construct your portfolio is what differentiates BRG’s strategy.', '', 'Asset Management')}
   <section class="section">
     <div class="container split">
       <div>
         <h2>Beyond the default allocation</h2>
-        <p>Many advisers hand you a standard mix of index funds and call it strategy. We use index funds too — they’re efficient — but we make deliberate choices about how your money is positioned.</p>
+        <p>Many advisors invest in traditional index funds only. We use index funds too, they’re efficient, but we go beyond that and make deliberate choices in efforts to lower risk further while seeking elevated returns.</p>
         <ul class="checklist">
-          <li><strong>Growth-tilted equities</strong> where it fits your risk profile, rather than a one-size default.</li>
-          <li><strong>Alternatives</strong> — exposure to areas like precious metals and infrastructure — to diversify and improve efficiency.</li>
-          <li><strong>Tactical positions</strong> when the opportunity is compelling, balanced by strategic discipline.</li>
-          <li><strong>Optional individual-stock sleeve</strong> for clients who want a portion actively selected.</li>
+          <li><strong>Style tilted equities</strong> — aimed to fit your risk profile and align with your investment goals.</li>
+          <li><strong>Alternatives</strong> — heavier exposure to alternative asset classes, such as commodities, real estate, and infrastructure.</li>
+          <li><strong>Tactical positioning</strong> — constant monitoring for undervalued securities for clients to invest in.</li>
+          <li><strong>Optional individual stock sleeves</strong> for clients who want tactical management and are able and willing to bear additional risk.</li>
         </ul>
       </div>
       <div class="media">
         <div class="card">
           <p class="eyebrow">The goal</p>
           <h3>A more efficient portfolio</h3>
-          <p style="color:var(--muted)">Efficiency means seeking strong returns for the risk you take — not chasing the hottest thing, and not settling for a generic model that ignores your situation.</p>
+          <p style="color:var(--muted)">Efficiency refers to seeking appropriate returns for the risk you take — not chasing what’s popular, and not relying on a one size fits all approach that overlooks your goals, constraints, and circumstances.</p>
           <div class="grid grid-2" style="gap:12px;margin-top:1rem">
-            <div class="pill">Risk-aware</div><div class="pill">Tax-aware</div>
-            <div class="pill">Diversified</div><div class="pill">Reviewed regularly</div>
+            <div class="pill">Risk Aware</div><div class="pill">Disciplined</div>
+            <div class="pill">Personalized</div><div class="pill">Goals Based</div>
           </div>
         </div>
       </div>
@@ -839,13 +851,70 @@ pages.push({
   </section>
   <section class="section section--soft">
     <div class="container measure center" style="margin-inline:auto">
-      <p class="eyebrow">Risk, honestly</p>
-      <h2>We manage risk — we don’t pretend it away</h2>
-      <p class="lead">When markets are strong, disciplined management can add real value. When everyone is selling, the job is to limit the damage. We build portfolios with that reality in mind and model a range of outcomes so you’re not surprised.</p>
+      <p class="eyebrow">Risk Management</p>
+      <h2>Understand where your risk is coming from</h2>
+      <p class="lead">When building portfolios, BRG makes it a point to find out how much each security contributes to the total risk of your portfolio. Strong markets are fun, but limiting the damage during market corrections and bear markets is vital to long term growth. We set clients up with that understanding in mind.</p>
       <p class="calc-note">All investing involves risk, including possible loss of principal. Nothing here is a promise of performance.</p>
     </div>
   </section>
   ${ctaBand('')}`
+});
+
+/* ---------- RETIREMENT PLANNING ---------- */
+function RETIREMENT_PLANNING_FAQ() {
+  return [
+    { q: 'How do you know if I am on track to retire?', a: '<p>BRG starts by understanding your current spending, savings, investments, and goals. This information allows us to make projections about your future assets. From there we use scenario analysis and run simulations to determine solvency levels at age 90, 95, and 100. These numbers are based on your current risk and return levels and can be adjusted for different cycles of your life.</p>' },
+    { q: 'How much should I be investing now?', a: '<p>There isn’t a universal savings rate. It depends on the retirement you are trying to create. What expenses do you envision yourself having throughout retirement, and is it the same, more, or less than your current lifestyle? Building a margin of safety by overestimating is something BRG does. We can help make sense of this to determine how much makes sense to contribute today.</p>' },
+    { q: 'How should my investment strategy evolve as I get closer to retirement?', a: '<p>As retirement approaches, your investment strategy should reflect changes in factors such as risk tolerance, risk capacity, time horizon, and liquidity needs. In an ideal scenario, you have enough in retirement savings to take risk off. However, if your goal is to retire sooner, you may need to target higher growth and potentially greater investment risk.</p>' },
+    { q: 'How do I incorporate tax planning into my retirement?', a: '<p>Tax planning is a key part of retirement planning. Diversifying your retirement assets between traditional and Roth accounts gives flexibility. BRG guides clients in tax planning by evaluating planning around contributions, conversions, withdrawals, Social Security, and estate strategies. Our goal is to improve the after tax outcome of your plan and what you may be potentially leaving to heirs.</p>' }
+  ];
+}
+
+pages.push({
+  file: 'retirement-planning.html', slug: 'retirement-planning.html', active: '', prefix: '',
+  title: 'Retirement Planning | Preparing For Your Future | BRG Financial',
+  description: 'Am I on track to retire? How much should I be investing now? BRG Financial builds retirement projections, scenario analysis, and stage-appropriate portfolios. Fiduciary and fee-based — Greater Philadelphia HQ, clients nationwide.',
+  main: `
+  ${pagehead('Retirement Planning', 'Preparing for your future', 'Am I on track to retire? How much should I be investing now? How do I balance how much I am investing vs how much I need now to live? BRG is here to help you make sense of all this.', '', 'Retirement Planning')}
+
+  <section class="section">
+    <div class="container split">
+      <div>
+        <h2>Your portfolio should grow with you</h2>
+        <p>The right portfolio at 30 is not the right portfolio at 60. We match risk and return to the stage you are actually in.</p>
+        <ul class="checklist">
+          <li><strong>Accumulation</strong> — prioritize long term growth as your time horizon allows you to tolerate greater market volatility.</li>
+          <li><strong>Consolidation</strong> — balance continued growth with the increasing importance of preserving accumulated wealth.</li>
+          <li><strong>Pre-retirement</strong> — reassess portfolio risk, liquidity, and income needs as retirement becomes within reach.</li>
+          <li><strong>Retirement</strong> — transition from maximizing accumulation to managing withdrawals, longevity, taxes, and sustainable spending.</li>
+        </ul>
+      </div>
+      <div class="media">
+        <div class="card" style="background:var(--navy-800);color:#e6e1d3;border:none">
+          <p class="eyebrow" style="color:var(--gold-500)">The process</p>
+          <h3 style="color:#fff">Building Towards the Golden Years</h3>
+          <ul class="checklist" style="margin-top:1rem">
+            <li style="color:#e6e1d3"><strong style="color:#fff">Plan</strong> — define what financial independence looks like.</li>
+            <li style="color:#e6e1d3"><strong style="color:#fff">Allocate</strong> — align risk and return characteristics with your goals and time horizon.</li>
+            <li style="color:#e6e1d3"><strong style="color:#fff">Optimize</strong> — invest in a portfolio that is suitable to your situation.</li>
+            <li style="color:#e6e1d3"><strong style="color:#fff">Review</strong> — annually monitor results and adjust as circumstances change.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--soft">
+    <div class="container">
+      <div class="center measure" style="margin-inline:auto"><p class="eyebrow">Answering important questions</p><h2>Retirement Planning FAQs</h2></div>
+      <div style="margin-top:1.6rem">${faqBlock(RETIREMENT_PLANNING_FAQ())}</div>
+    </div>
+  </section>
+  ${ctaBand('')}`,
+  jsonld: [faqSchema(RETIREMENT_PLANNING_FAQ()), {
+    "@context": "https://schema.org", "@type": "Service", "serviceType": "Retirement planning",
+    "provider": { "@type": "FinancialService", "name": SITE.name }, "areaServed": ["Pennsylvania", "New Jersey", "Philadelphia"]
+  }]
 });
 
 /* ---------- RETIREMENT INCOME ---------- */
@@ -854,24 +923,24 @@ pages.push({
   title: 'Retirement Income & Tax-Aware Strategy | BRG Financial',
   description: 'Withdrawal sequencing, Social Security timing, and Roth conversion strategy modeled through retirement. Fiduciary, fee-based — Greater Philadelphia HQ, clients nationwide.',
   main: `
-  ${pagehead('Planning for the years that count', 'Turn savings into a paycheck that lasts', 'Accumulating is one job; drawing it down wisely is another. We model your retirement in detail so decisions are grounded in numbers, not guesses.', '', 'Retirement Income')}
+  ${pagehead('Make Your Wealth Work For You', 'Turn savings into a paycheck that lasts', 'Accumulating is one job; drawing it down wisely is another. We model your retirement in detail so decisions are grounded in numbers, not guesses.', '', 'Retirement Income')}
   <section class="section">
     <div class="container">
       <div class="grid grid-3">
-        <div class="card"><div class="ic-box">${I.compass}</div><h3>Withdrawal strategy</h3><p>Which accounts to draw from and in what order — sequencing that can stretch how long your money lasts.</p></div>
-        <div class="card"><div class="ic-box">${I.clock}</div><h3>Social Security timing</h3><p>When to claim can be worth tens of thousands over a retirement. We model the trade-offs for your situation.</p></div>
-        <div class="card"><div class="ic-box">${I.scale}</div><h3>Roth conversions</h3><p>Low-income years can be an ideal window to convert at a lower tax cost — classic retirement tax planning.</p></div>
-        <div class="card"><div class="ic-box">${I.chart}</div><h3>Monte Carlo modeling</h3><p>We randomize market outcomes to stress-test your plan and show solvency levels through age 90, 95, and 100.</p></div>
-        <div class="card"><div class="ic-box">${I.layers}</div><h3>Scenario planning</h3><p>Windfall, home sale, a big change in spending — we project how each path plays out before you commit.</p></div>
-        <div class="card"><div class="ic-box">${I.shield}</div><h3>Ongoing adjustments</h3><p>Your plan isn’t static. We revisit it as markets, taxes, and your life change.</p></div>
+        <div class="card"><div class="ic-box">${I.compass}</div><h3>Withdrawal Strategy</h3><p>Which accounts to draw from and in what order — sequencing that can stretch how long your money lasts.</p></div>
+        <div class="card"><div class="ic-box">${I.clock}</div><h3>Social Security Timing</h3><p>When to claim can be worth tens of thousands over a retirement. We model the trade-offs for your situation.</p></div>
+        <div class="card"><div class="ic-box">${I.scale}</div><h3>Roth Conversions</h3><p>Low-income years can be an ideal window to convert at a lower tax cost — classic retirement tax planning.</p></div>
+        <div class="card"><div class="ic-box">${I.chart}</div><h3>Monte Carlo Modeling</h3><p>We run thousands of potential market scenarios to evaluate how likely your plan is to sustain your financial needs through age 90, 95, and 100 years of age.</p></div>
+        <div class="card"><div class="ic-box">${I.layers}</div><h3>Scenario Planning</h3><p>Inheritance, home sale, a big change in spending — we project how each path plays out before you commit.</p></div>
+        <div class="card"><div class="ic-box">${I.shield}</div><h3>Ongoing Adjustments</h3><p>Your plan isn’t static. We revisit it as markets, taxes, and your life change.</p></div>
       </div>
     </div>
   </section>
   <section class="section section--soft">
     <div class="container measure center" style="margin-inline:auto">
-      <p class="eyebrow">Straight answers</p>
+      <p class="eyebrow">Straight Answers</p>
       <h2>The best plan is the honest one</h2>
-      <p class="lead">A good adviser tells you what you need to hear, not just what feels good. If a goal doesn’t fit the math, you’ll know — with enough time to do something about it.</p>
+      <p class="lead">Good financial advice is hearing what you need to — even if it’s not always what feels good. If your goals don’t align with the math, we’ll tell you and work to find a path that does.</p>
     </div>
   </section>
   ${ctaBand('')}`
@@ -883,7 +952,7 @@ pages.push({
   title: 'About Benjamin Gialloreto, CFA | BRG Financial',
   description: 'Meet Benjamin Gialloreto, CFA — founder of BRG Financial, a fiduciary Registered Investment Adviser headquartered in Greater Philadelphia, serving clients nationwide.',
   jsonld: [{
-    "@context": "https://schema.org", "@type": "Person", "name": "Benjamin R. Gialloreto", "honorificSuffix": "CFA",
+    "@context": "https://schema.org", "@type": "Person", "name": "Benjamin R Gialloreto", "honorificSuffix": "CFA",
     "jobTitle": "Founder & Principal", "worksFor": { "@type": "FinancialService", "name": "BRG Financial" },
     "alumniOf": "Immaculata University", "hasCredential": "Chartered Financial Analyst (CFA)",
     "image": SITE.url + "/assets/img/ben-gialloreto.jpg", "url": SITE.url + "/about.html"
@@ -894,21 +963,20 @@ pages.push({
     <div class="container split">
       <div>
         <h2>Why BRG Financial exists</h2>
-        <p>BRG Financial, LLC is solely owned and operated by Benjamin Gialloreto, CFA. A former student-athlete at Immaculata University, Ben pursued a dual major in Finance and Business Management, graduating with Summa Cum Laude honors. Fueled by a passion for investments, he entered the financial industry and earned the CFA Charter in 2022 — and in the fall of 2023, founded BRG Financial, an asset management firm headquartered in Pennsylvania.</p>
-        <p>The objective at BRG is simple: help clients achieve their financial goals. We prioritize building enduring, impactful relationships and recognize the unique needs of each household — meticulously assessing every client’s financial landscape and aspirations, then tailoring custom solutions to optimize their financial journey.</p>
-        <p>Business aside, Ben loves spending time with family and friends — ideally in Wildwood Crest, NJ, where his family has spent summers for more than 70 years. He’s also a die-hard Philadelphia sports fan who never passes up an Eagles or Phillies game.</p>
+        <p>BRG Financial, LLC is solely owned and operated by Benjamin Gialloreto, CFA. A former student-athlete at Immaculata University, Ben pursued a dual major in Finance and Business Management, graduating with Summa Cum Laude honors in 2018. Fueled by a passion for investments, he entered the financial industry immediately after college and earned the CFA Charter in 2022. In the fall of 2023, he founded BRG Financial, an asset management firm headquartered in Pennsylvania.</p>
+        <p>BRG’s mission is to bring forth personalized investment solutions tailored to clients’ personal goals. We prioritize building enduring, impactful relationships and recognize the unique needs of each household. Our investment philosophy is centered around efficiency — the idea of seeking the strongest returns for the level of risk you are willing and able to take.</p>
+        <p>Business aside, Ben loves spending time with family and friends — ideally in Wildwood Crest, NJ, where his family has spent summers for more than 70 years. He’s also a die-hard Philadelphia sports fan who never passes up attending an Eagles or Phillies game.</p>
         <p>As a Registered Investment Adviser, BRG is held to a fiduciary standard — legally obligated to act in your best interest, full stop.</p>
         <a class="btn btn--navy" href="contact.html">Introduce yourself ${I.arrow}</a>
       </div>
       <div class="media">
         <div class="card">
-          <img class="headshot" src="assets/img/ben-gialloreto.jpg" alt="Benjamin R. Gialloreto, CFA — Founder of BRG Financial" width="346" height="394">
+          <img class="headshot" src="assets/img/ben-gialloreto.jpg" alt="Benjamin R Gialloreto, CFA — Founder of BRG Financial" width="346" height="394">
           <div style="margin:1.1rem 0 .8rem"><h3 class="mb-0">${SITE.advisor}</h3><p class="mb-0" style="color:var(--muted);font-size:.9rem">${SITE.advisorRole}</p></div>
-          <p style="color:var(--muted)">Ben leads BRG Financial’s investment management and retirement work, combining a disciplined, tactical approach with a genuine commitment to educating clients along the way.</p>
           <ul class="checklist" style="margin-top:.6rem">
-            <li>CFA® Charterholder (2022)</li>
+            <li>CFA Charterholder (2022)</li>
             <li>B.S. Finance &amp; Business Management, Immaculata University — Summa Cum Laude</li>
-            <li>Founded BRG Financial, fall 2023</li>
+            <li>Founded BRG Financial, LLC, fall 2023</li>
             <li>Greater Philadelphia HQ · clients nationwide</li>
           </ul>
         </div>
@@ -919,9 +987,9 @@ pages.push({
     <div class="container">
       <div class="center measure" style="margin-inline:auto"><p class="eyebrow">What guides us</p><h2>Principles, not a pitch</h2></div>
       <div class="grid grid-3" style="margin-top:1.6rem">
-        <div class="card"><div class="ic-box">${I.shield}</div><h3>Fiduciary first</h3><p>Your interest comes first, always, and we’ll put it in writing.</p></div>
+        <div class="card"><div class="ic-box">${I.shield}</div><h3>Fiduciary First</h3><p>BRG puts client’s interest above our own.</p></div>
         <div class="card"><div class="ic-box">${I.scale}</div><h3>Transparent</h3><p>Clear, fee-based pricing. You always know what you’re paying and why.</p></div>
-        <div class="card"><div class="ic-box">${I.spark}</div><h3>Educational</h3><p>We explain the “why” so you can make confident decisions.</p></div>
+        <div class="card"><div class="ic-box">${I.chart}</div><h3>Reasoning</h3><p>Data serves as the foundation for our decision making — grounded in a detailed analysis of your numbers.</p></div>
       </div>
     </div>
   </section>
@@ -955,7 +1023,7 @@ pages.push({
 pages.push({
   file: 'insights.html', slug: 'insights.html', active: 'insights.html', prefix: '',
   title: 'Insights & Articles | BRG Financial',
-  description: 'Plain-English articles on investing, 401(k)s, Roth vs. traditional, advisor fees, and retirement — published regularly by BRG Financial.',
+  description: 'Plain-English articles on investing, 401(k)s, Roth vs. traditional, and retirement — published regularly by BRG Financial.',
   main: `
   ${pagehead('Insights', 'Straight talk on money', 'Practical, jargon-free articles on investing and retirement. New pieces published regularly — and shared to LinkedIn and Facebook as they go live.', '', 'Insights')}
   <section class="section">
@@ -1034,20 +1102,20 @@ POSTS.forEach((p, idx) => {
 /* ---------- GET STARTED (lead magnet + calculator) ---------- */
 pages.push({
   file: 'get-started.html', slug: 'get-started.html', active: '', prefix: '',
-  title: 'Free Investor Guide + Growth Calculator | BRG Financial',
-  description: 'Download BRG Financial’s free 10-Minute Investor Starter Guide and use the compound-growth calculator to see the cost of waiting. Greater Philadelphia HQ — serving clients nationwide.',
+  title: 'Complimentary Investor Guide + Growth Calculator | BRG Financial',
+  description: 'Download BRG Financial’s complimentary Investment Starter Guide and use the compound-growth calculator to see the cost of waiting. Greater Philadelphia HQ — serving clients nationwide.',
   main: `
-  ${pagehead('Start here', 'See what your money could do — then get the guide', 'Play with the numbers below, then grab the free starter guide. No cost, no obligation, no jargon.', '', 'Get Started')}
+  ${pagehead('Start here', 'Invest with Purpose. See The Potential.', 'Play with the numbers below, then grab the complimentary starter guide. No cost, no obligation, no jargon.', '', 'Get Started')}
   <section class="section">
     <div class="container">
       <div id="calc" class="calc">
         <div class="panel">
           <h3 style="margin-top:0">Compound Growth Calculator</h3>
-          <p style="color:var(--muted);font-size:.92rem">Drag the sliders to see how consistent investing can grow over time.</p>
-          <div class="field"><label>Starting amount <span class="val" id="c-start-v">$5,000</span></label><input type="range" id="c-start" min="0" max="250000" step="1000" value="5000"></div>
-          <div class="field"><label>Monthly contribution <span class="val" id="c-monthly-v">$400</span></label><input type="range" id="c-monthly" min="0" max="10000" step="50" value="400"></div>
-          <div class="field"><label>Years invested <span class="val" id="c-years-v">30 yrs</span></label><input type="range" id="c-years" min="1" max="45" step="1" value="30"></div>
-          <div class="field"><label>Average annual return <span class="val" id="c-rate-v">8.0%</span></label><input type="range" id="c-rate" min="1" max="20" step="0.5" value="8"></div>
+          <p style="color:var(--muted);font-size:.92rem">Drag the sliders — or type a number in any box — to see how consistent investing can grow over time.</p>
+          <div class="field"><label for="c-start-n">Starting amount <span class="val" id="c-start-v">$5,000</span></label><input type="range" id="c-start" min="0" max="1000000" step="1000" value="5000"><input class="calc-num" type="number" id="c-start-n" inputmode="numeric" min="0" max="1000000" step="1000" value="5000" aria-label="Starting amount in dollars"></div>
+          <div class="field"><label for="c-monthly-n">Monthly contribution <span class="val" id="c-monthly-v">$400</span></label><input type="range" id="c-monthly" min="0" max="10000" step="50" value="400"><input class="calc-num" type="number" id="c-monthly-n" inputmode="numeric" min="0" max="10000" step="50" value="400" aria-label="Monthly contribution in dollars"></div>
+          <div class="field"><label for="c-years-n">Years invested <span class="val" id="c-years-v">30 yrs</span></label><input type="range" id="c-years" min="1" max="45" step="1" value="30"><input class="calc-num" type="number" id="c-years-n" inputmode="numeric" min="1" max="45" step="1" value="30" aria-label="Years invested"></div>
+          <div class="field"><label for="c-rate-n">Average annual return <span class="val" id="c-rate-v">8.0%</span></label><input type="range" id="c-rate" min="1" max="20" step="0.5" value="8"><input class="calc-num" type="number" id="c-rate-n" inputmode="decimal" min="1" max="20" step="0.1" value="8" aria-label="Average annual return percent"></div>
         </div>
         <div class="panel" style="display:flex;flex-direction:column;justify-content:center;background:var(--navy-800);color:#e6e1d3;border:none">
           <div class="calc-result">
@@ -1070,8 +1138,8 @@ pages.push({
       <div class="leadmag" data-lead-wrap>
         <div class="split" style="align-items:center">
           <div>
-            <span class="badge-soft">Free PDF</span>
-            <h2 style="margin-top:.6rem">The 10-Minute Investor Starter Guide</h2>
+            <span class="badge-soft">Complimentary PDF</span>
+            <h2 style="margin-top:.6rem">The BRG Financial Investment Starter Guide</h2>
             <p style="color:#c8d7ec">Everything you actually need to begin — and the myths you can ignore. Enter your email and it’s yours.</p>
             <div data-lead-done hidden><p class="notice" style="background:#e7f4ee;border-color:#bfe3cf;color:#245c42">✓ Your guide is on the way — check your inbox!</p></div>
             <form data-lead id="gs-lead" action="${SITE.formEndpoint || '#'}" method="POST">
@@ -1084,10 +1152,10 @@ pages.push({
             <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:22px">
               <h4 style="color:#fff">Inside the guide</h4>
               <ul class="checklist" style="margin:.6rem 0 0">
-                <li style="color:#f1ede0">The 5 moves that matter most</li>
-                <li style="color:#f1ede0">How much you really need to start</li>
-                <li style="color:#f1ede0">Roth vs. traditional in one page</li>
-                <li style="color:#f1ede0">A simple first-year checklist</li>
+                <li style="color:#f1ede0">How much is needed to start</li>
+                <li style="color:#f1ede0">Five Smart Money Moves</li>
+                <li style="color:#f1ede0">Five investing myths, answered</li>
+                <li style="color:#f1ede0">Traditional vs Roth in one page</li>
               </ul>
             </div>
           </div>
@@ -1095,7 +1163,39 @@ pages.push({
       </div>
     </div>
   </section>
-  ${ctaBand('')}`
+  ${ctaBand('')}`,
+  scripts: `<style>
+  .calc .field{position:relative}
+  .calc .calc-num{width:100%;margin-top:.5rem;padding:.5rem .65rem;border:1px solid #ddd8cc;border-radius:8px;font:inherit;font-size:.95rem;color:#1b1b1d;background:#fff}
+  .calc .calc-num:focus{outline:2px solid #c9a227;outline-offset:1px;border-color:#c9a227}
+  </style>
+  <script>
+  (function(){
+    var pairs=[['c-start','c-start-n'],['c-monthly','c-monthly-n'],['c-years','c-years-n'],['c-rate','c-rate-n']];
+    pairs.forEach(function(p){
+      var slider=document.getElementById(p[0]), box=document.getElementById(p[1]);
+      if(!slider||!box) return;
+      function clamp(v){
+        var min=parseFloat(slider.min), max=parseFloat(slider.max);
+        if(isNaN(v)) return null;
+        return Math.min(max, Math.max(min, v));
+      }
+      slider.addEventListener('input', function(){ box.value = slider.value; });
+      box.addEventListener('input', function(){
+        var v = clamp(parseFloat(box.value));
+        if(v===null) return;
+        slider.value = v;
+        slider.dispatchEvent(new Event('input', {bubbles:true}));
+      });
+      box.addEventListener('blur', function(){
+        var v = clamp(parseFloat(box.value));
+        box.value = (v===null ? slider.value : v);
+        slider.value = box.value;
+        slider.dispatchEvent(new Event('input', {bubbles:true}));
+      });
+    });
+  })();
+  </script>`
 });
 
 /* ---------- CONTACT ---------- */
@@ -1150,7 +1250,7 @@ pages.push({
 pages.push({
   file: 'schedule.html', slug: 'schedule.html', active: 'contact.html', prefix: '',
   title: 'Schedule an Appointment | BRG Financial',
-  description: 'Book a complimentary consultation with Benjamin R. Gialloreto, CFA — 20 minutes, no cost, no pressure. Greater Philadelphia HQ, serving clients nationwide.',
+  description: 'Book a complimentary consultation with Benjamin R Gialloreto, CFA — 20 minutes, no cost, no pressure. Greater Philadelphia HQ, serving clients nationwide.',
   main: `
   ${pagehead('Schedule', 'Book your complimentary consultation', 'Twenty minutes with ' + SITE.advisorShort + ' — your situation, your questions, straight answers. Phone or video, no cost, no pressure.', '', 'Schedule')}
   <section class="section">
@@ -1189,7 +1289,7 @@ pages.push({
     <div class="container center measure" style="margin-inline:auto">
       <div style="width:64px;height:64px;border-radius:50%;background:var(--green-050);color:var(--green-600);display:grid;place-items:center;margin:0 auto 1rem">${I.check}</div>
       <h1>Thanks — we got it.</h1>
-      <p class="lead">We’ll be in touch within one business day. In the meantime, grab the free investor guide or read a few articles.</p>
+      <p class="lead">We’ll be in touch within one business day. In the meantime, grab the complimentary investor guide or read a few articles.</p>
       <div class="hero-cta" style="justify-content:center"><a class="btn btn--primary" href="get-started.html">Get the guide</a><a class="btn btn--ghost" href="insights.html">Read insights</a></div>
     </div>
   </section>`
@@ -1378,9 +1478,10 @@ const rssItems = POSTS.map(p => `  <item><title>${esc(p.title)}</title><link>${S
 fs.writeFileSync(path.join(OUT, 'feed.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel>\n<title>BRG Financial Insights</title><link>${SITE.url}/insights.html</link><description>Plain-English articles on investing and retirement from BRG Financial.</description>\n${rssItems}\n</channel></rss>\n`);
 
 /* ---- OG image manifest (consumed by the share-image renderer) ---- */
-fs.writeFileSync('/root/work/og-manifest.json', JSON.stringify(POSTS.map(p => ({ slug: p.slug, title: p.title, cat: p.cat })), null, 2));
+fs.writeFileSync(path.join(OUT, 'og-manifest.json'), JSON.stringify(POSTS.map(p => ({ slug: p.slug, title: p.title, cat: p.cat })), null, 2));
 
 /* ---- favicon.svg + og placeholder note ---- */
+fs.mkdirSync(path.join(OUT, 'assets/img'), { recursive: true });
 fs.writeFileSync(path.join(OUT, 'assets/img/favicon.svg'),
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="10" fill="#0b0b0c"/><text x="24" y="34" text-anchor="middle" font-family="Georgia,serif" font-size="30" font-weight="600" fill="#c9a227">B</text></svg>`);
 
