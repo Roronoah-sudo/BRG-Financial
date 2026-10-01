@@ -24,18 +24,14 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Benjamin R Gialloreto","honorificSuffix":"CFA","jobTitle":"Founder & Principal","worksFor":{"@type":"FinancialService","name":"BRG Financial"},"alumniOf":"Immaculata University","hasCredential":"Chartered Financial Analyst (CFA)","image":"https://brgfinancial.net/assets/img/ben-gialloreto.jpg","url":"https://brgfinancial.net/about.html"}</script>
   <link rel="alternate" type="application/rss+xml" title="BRG Financial Insights" href="https://brgfinancial.net/feed.xml">
   <!-- Google Analytics: set SITE.ga4 in gen.js and regenerate to activate -->
-  <style>
-  /* Brand lockup — move into assets/css/styles.css when convenient */
-  .brand-logo{display:inline-block;line-height:0}
-  .brand-logo img{display:block;width:240px;height:auto}
-  .brand-logo small{display:block;margin-top:5px;font-size:9.5px;line-height:1;
-    letter-spacing:.18em;text-transform:uppercase;color:#8a7a3e;font-weight:700;white-space:nowrap}
-  @media (max-width:640px){
-    .brand-logo img{width:186px}
-    .brand-logo small{font-size:8px;letter-spacing:.15em}
-  }
-  </style>
   
+  <style>
+  .brand-logo{display:inline-flex;flex-direction:column;align-items:flex-start;gap:.3rem;line-height:1}
+  .brand-logo img{display:block;width:240px;max-width:100%;height:auto}
+  .brand-logo small{display:block;margin:0;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:#6b6659;font-weight:600}
+  .cta-stack{display:flex;flex-direction:column;align-items:center;gap:.15em;line-height:1.15}
+  .cta-stack span{display:block}
+  </style>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -52,7 +48,7 @@
   <div class="container">
     <nav class="nav" aria-label="Primary">
       <a class="brand" href="index.html" aria-label="BRG Financial home">
-        <span class="brand-logo"><img src="assets/img/brg-logo-ink.png" alt="BRG Financial" width="240" height="35"><small>Registered Investment Adviser</small></span>
+        <span class="brand-logo"><img src="assets/img/brg-logo-ink.png" alt="BRG Financial" width="240" height="36"><small>Registered Investment Adviser</small></span>
       </a>
       <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
       <ul class="nav-links" id="nav-links"><li><a href="services.html">Services</a></li><li><a href="401k-erisa.html">401(k) & ERISA</a></li><li><a href="insights.html">Insights</a></li><li><a href="about.html" class="active" aria-current="page">About</a></li><li><a href="contact.html">Contact</a></li></ul>
@@ -119,7 +115,7 @@
   <section class="section section--navy">
     <div class="container center measure" style="margin-inline:auto">
       <p class="eyebrow">Let's Talk</p>
-      <h2 style="color:#fff">20 Minute Intro Call. No Pressure. No Cost.</h2>
+      <h2 style="color:#fff" class="cta-stack"><span>20 Minute Intro Call</span><span>No Pressure</span><span>No Cost</span></h2>
       <p style="color:#d8d4c6">BRG is happy to answer any questions about your financial situation. Our fiduciary duty is to put client's interest above our own.</p>
       <div class="hero-cta" style="justify-content:center;margin-top:1.2rem">
         <a class="btn btn--primary btn--lg" href="schedule.html">Schedule an appointment <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>

@@ -24,18 +24,14 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"BRG Financial","url":"https://brgfinancial.net","potentialAction":{"@type":"SearchAction","target":"https://brgfinancial.net/insights.html?q={q}","query-input":"required name=q"}}</script>
   <link rel="alternate" type="application/rss+xml" title="BRG Financial Insights" href="https://brgfinancial.net/feed.xml">
   <!-- Google Analytics: set SITE.ga4 in gen.js and regenerate to activate -->
-  <style>
-  /* Brand lockup — move into assets/css/styles.css when convenient */
-  .brand-logo{display:inline-block;line-height:0}
-  .brand-logo img{display:block;width:240px;height:auto}
-  .brand-logo small{display:block;margin-top:5px;font-size:9.5px;line-height:1;
-    letter-spacing:.18em;text-transform:uppercase;color:#8a7a3e;font-weight:700;white-space:nowrap}
-  @media (max-width:640px){
-    .brand-logo img{width:186px}
-    .brand-logo small{font-size:8px;letter-spacing:.15em}
-  }
-  </style>
   
+  <style>
+  .brand-logo{display:inline-flex;flex-direction:column;align-items:flex-start;gap:.3rem;line-height:1}
+  .brand-logo img{display:block;width:240px;max-width:100%;height:auto}
+  .brand-logo small{display:block;margin:0;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:#6b6659;font-weight:600}
+  .cta-stack{display:flex;flex-direction:column;align-items:center;gap:.15em;line-height:1.15}
+  .cta-stack span{display:block}
+  </style>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -52,7 +48,7 @@
   <div class="container">
     <nav class="nav" aria-label="Primary">
       <a class="brand" href="index.html" aria-label="BRG Financial home">
-        <span class="brand-logo"><img src="assets/img/brg-logo-ink.png" alt="BRG Financial" width="240" height="35"><small>Registered Investment Adviser</small></span>
+        <span class="brand-logo"><img src="assets/img/brg-logo-ink.png" alt="BRG Financial" width="240" height="36"><small>Registered Investment Adviser</small></span>
       </a>
       <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
       <ul class="nav-links" id="nav-links"><li><a href="services.html">Services</a></li><li><a href="401k-erisa.html">401(k) & ERISA</a></li><li><a href="insights.html">Insights</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li></ul>
@@ -84,7 +80,7 @@
             <span class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg> Fiduciary, 100% of the time</span>
             <span class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg> Strategic risk management</span>
             <span class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-4 4"/></svg> Customized portfolio solutions</span>
-            <span class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M12 20c0-6 0-9 4-13"/><path d="M12 14C7 14 4 11 4 6c5 0 8 3 8 8z"/></svg> 401(k) &amp; ERISA Specialist</span>
+            <span class="chip"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M12 20c0-6 0-9 4-13"/><path d="M12 14C7 14 4 11 4 6c5 0 8 3 8 8z"/></svg> 401(k) &amp; ERISA Services</span>
           </div>
           <div class="hero-cta">
             <a class="btn btn--primary btn--lg" href="schedule.html">Schedule an appointment <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
@@ -151,43 +147,14 @@
         <p class="lead">Whether you are starting to invest for retirement or inheriting a lump sum, BRG’s investment strategies are tailored to your specific needs.</p>
       </div>
       <div class="grid grid-4" style="margin-top:2.2rem">
-        <a class="card card--link" href="investment-management.html"><div class="ic-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-4 4"/></svg></div><h3>Asset Management</h3><p>Portfolio construction designed to be efficient — emphasis on seeking the highest level of returns for a given level of risk. Active, tactical trades mixed into a low cost, strategic foundation.</p><span class="more">Explore <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></a>
+        <a class="card card--link" href="investment-management.html"><div class="ic-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-4 4"/></svg></div><h3>Asset Management</h3><p>Portfolio construction designed to be efficient — emphasis on seeking the highest level of returns for a given level of risk.</p><span class="more">Explore <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></a>
         <a class="card card--link" href="retirement-planning.html"><div class="ic-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20h10"/><path d="M12 20c0-6 0-9 4-13"/><path d="M12 14C7 14 4 11 4 6c5 0 8 3 8 8z"/></svg></div><h3>Retirement Planning</h3><p>Rollovers, contribution strategy, and Roth vs. traditional guidance for individuals building their retirement account.</p><span class="more">Explore <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></a>
-        <a class="card card--link" href="retirement-income.html"><div class="ic-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div><h3>Retirement Income</h3><p>Withdrawal strategy, Social Security timing, and tax-aware moves like Roth conversions, modeled for your future.</p><span class="more">Explore <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></a>
+        <a class="card card--link" href="retirement-income.html"><div class="ic-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></div><h3>Retirement Income</h3><p>Accumulating for retirement is a necessary step, but drawing it down wisely is what comes next. BRG models your retirement outlook in detail so decisions are grounded in numbers – not guesses.</p><span class="more">Explore <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></a>
         <a class="card card--link" href="401k-erisa.html"><div class="ic-box"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 7h14"/><path d="m5 7-3 6a3 3 0 0 0 6 0z"/><path d="m19 7-3 6a3 3 0 0 0 6 0z"/><path d="M7 21h10"/></svg></div><h3>401(k) Plans</h3><p>Fiduciary process, low cost investment lineups, and plan due diligence for business owners sponsoring a 401(k).</p><span class="more">Explore <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></span></a>
       </div>
     </div>
   </section>
 
-  <section class="section section--soft">
-    <div class="container split">
-      <div>
-        <p class="eyebrow">Why BRG</p>
-        <h2>Not a script. A strategy.</h2>
-        <p>Plenty of advisers put you in a handful of index funds, call it a day, and act like they’ve done you a favor. That’s fine — you could do that yourself. Our approach is more deliberate.</p>
-        <ul class="checklist">
-          <li>Growth-tilted equity exposure, not just a default allocation.</li>
-          <li>Alternatives — precious metals, infrastructure, and more — to make portfolios more efficient.</li>
-          <li>Tactical positions when the opportunity is there, strategic discipline the rest of the time.</li>
-          <li>Optional individual stock sleeve for clients who want it.</li>
-        </ul>
-        <a class="btn btn--navy" href="investment-management.html">How we invest <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
-      </div>
-      <div class="media">
-        <div class="card" style="padding:0;overflow:hidden">
-          <div style="background:var(--navy-800);color:#fff;padding:22px 24px"><p class="eyebrow" style="color:var(--gold-500);margin-bottom:.3rem">The BRG difference</p><h3 style="color:#fff;margin:0">Built to be efficient</h3></div>
-          <div style="padding:22px 24px">
-            <div class="grid grid-2" style="gap:14px">
-              <div class="stat"><div class="num">Fiduciary</div><div class="lbl">Always, in writing</div></div>
-              <div class="stat"><div class="num">PA &amp; NJ</div><div class="lbl">Plus other states on request</div></div>
-              <div class="stat"><div class="num">Tax-aware</div><div class="lbl">Roth conversions &amp; more</div></div>
-              <div class="stat"><div class="num">Hands-on</div><div class="lbl">You talk to Ben, not a call center</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="section">
     <div class="container">
@@ -253,7 +220,7 @@
   <section class="section section--navy">
     <div class="container center measure" style="margin-inline:auto">
       <p class="eyebrow">Let's Talk</p>
-      <h2 style="color:#fff">20 Minute Intro Call. No Pressure. No Cost.</h2>
+      <h2 style="color:#fff" class="cta-stack"><span>20 Minute Intro Call</span><span>No Pressure</span><span>No Cost</span></h2>
       <p style="color:#d8d4c6">BRG is happy to answer any questions about your financial situation. Our fiduciary duty is to put client's interest above our own.</p>
       <div class="hero-cta" style="justify-content:center;margin-top:1.2rem">
         <a class="btn btn--primary btn--lg" href="schedule.html">Schedule an appointment <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
